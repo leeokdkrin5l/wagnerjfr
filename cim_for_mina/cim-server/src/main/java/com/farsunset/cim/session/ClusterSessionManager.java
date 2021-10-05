@@ -34,7 +34,7 @@ public class ClusterSessionManager implements SessionManager{
     	
     	//这里查询数据库 
     	 /*CIMSession session = database.getSession(account);
-    	 session.setIoSession(((NioSocketAcceptor) ContextHolder.getBean("serverAcceptor")).getManagedSessions().get(session.getNid()));
+    	 session.setIoSession(((NioSocketAcceptor) ContextHolder.getBean("CIMNioAcceptor")).getManagedSessions().get(session.getNid()));
          return session;*/
     	return null;
     }
