@@ -9,7 +9,7 @@ package com.farsunset.cim.session;
 import java.util.List;
 import com.farsunset.cim.sdk.server.session.CIMSession;
 import com.farsunset.cim.sdk.server.session.SessionManager;
-
+import com.farsunset.cim.sdk.server.launcher.CIMNioSocketAcceptor;
 
 /** 
  * 集群 session管理实现示例， 各位可以自行实现 AbstractSessionManager接口来实现自己的 session管理
@@ -34,7 +34,7 @@ public class ClusterSessionManager implements SessionManager{
     	
     	//这里查询数据库 
     	 /*CIMSession session = database.getSession(account);
-    	 session.setIoSession(((NioSocketAcceptor) ContextHolder.getBean("CIMNioAcceptor")).getManagedSessions().get(session.getNid()));
+    	 session.setIoSession(ContextHolder.getBean(CIMNioSocketAcceptor.class).getManagedSessions().get(session.getNid()));
          return session;*/
     	return null;
     }
