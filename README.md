@@ -2,8 +2,8 @@
 此开源版本为基础功能版本，只有消息推送的基础功能！netty版本,和mina版本结构和功能完全一致，大家可以选择自己喜欢的或者合适的版本学习或者使用!
 
 #侣信专业版1.4.5版本发布 
-[https://github.com/funset/lvxin-pro](https://github.com/funset/lvxin-pro)
-
+ **[https://github.com/funset/lvxin-pro](https://github.com/funset/lvxin-pro)** 
+ 
 
 #前言：
 
