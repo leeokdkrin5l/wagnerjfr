@@ -37,8 +37,11 @@ class CIMCacheToolkit extends SQLiteOpenHelper {
 	public static final String KEY_CIM_SERVIER_PORT = "KEY_CIM_SERVIER_PORT";
 	
 	public static final String KEY_CIM_CONNECTION_STATE = "KEY_CIM_CONNECTION_STATE";
+   
     private static  CIMCacheToolkit toolkit;
+
 	private SQLiteDatabase mSQLiteDatabase;
+
 	public synchronized static CIMCacheToolkit getInstance(Context context){
          if (toolkit==null){
 			 toolkit = new CIMCacheToolkit(context);
