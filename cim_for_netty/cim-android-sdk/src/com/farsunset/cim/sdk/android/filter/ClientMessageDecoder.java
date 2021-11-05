@@ -53,6 +53,8 @@ public class ClientMessageDecoder extends ByteToMessageDecoder {
 
 		buffer.markReaderIndex();
 
+		buffer.markReaderIndex();
+
 		byte conetnType = buffer.readByte();
 
 		byte lv = buffer.readByte();// int 低位
