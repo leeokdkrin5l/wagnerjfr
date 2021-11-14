@@ -1,8 +1,7 @@
 #说明：
 此开源版本为基础功能版本，只有消息推送的基础功能！netty版本,和mina版本结构和功能完全一致，大家可以选择自己喜欢的或者合适的版本学习或者使用!
 
-#侣信专业版2.2.3版本发布
-
+#侣信专业版2.2.3版本发布 
 #[http://farsunset.com](http://farsunset.com)
  
 
@@ -17,7 +16,7 @@
 ###服务端修改
 1.多台服务器集群配置，首先需要重写SessionManager接口(参考com.farsunset.ichat.cim.session.ClusterSessionManager.java)，用户登录时，将账号和服务器IP 存入数据库中，这样就可以统计各台服务器接受的连接数量。
 2.客户端连接服务器时，服务端为客户端动态分配 服务器IP，每次分配 较为空闲的服务器IP
-3.服务端接受消息后 通过接收者账号查询出对应的IoSession，和 登录的 服务器IP，然后将消息信息传往目标服务器处理发送
+3.服务端接受消息后 通过接收者账号查询出对应的Iosession，和 登录的 服务器IP，然后将消息信息传往目标服务器处理发送
 
 
 ###客户端端修改
@@ -34,7 +33,7 @@
 ![image](http://staticres.oss-cn-hangzhou.aliyuncs.com/cim-android_client.png)
 
 ##服务端消息 web入口
-#http://192.168.1.11:8080/cim-server
+#http://192.168.1.11:8080/ichat-server
 
 ![image](http://staticres.oss-cn-hangzhou.aliyuncs.com/cim-server.png)
 
@@ -140,8 +139,20 @@ public static  void sendRequest(Context context,SentBody body)
    示例：
    CIMPushManager.isConnected(context);   
 
+1.8获取PushManager状态
+    //被销毁的destroy()
+	CIMPushManager.STATE_DESTROYED = 0x0000DE;
+	//被销停止的 stop()
+	CIMPushManager.STATE_STOPED = 0x0000EE;
+	
+	CIMPushManager.STATE_NORMAL = 0x000000;
+	
+    public int getState(Context context)   
 
-1.8推送消息以及相关事件的接收
+   示例：
+   CIMPushManager.getState(context);   
+
+1.9推送消息以及相关事件的接收
 
 首先注册一个广播，并监听以下action 参照 后面androidManifest.xml配置
 
