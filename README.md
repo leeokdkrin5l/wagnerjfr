@@ -44,7 +44,7 @@
 com.farsunset.cim.client.android.CIMPushManager
 ```java
 
-** 1.1连接服务器
+1.1连接服务器
    /**
      * 初始化,连接服务端，在程序启动页或者 在Application里调用
 	 * @param context
@@ -56,8 +56,8 @@ com.farsunset.cim.client.android.CIMPushManager
 示例
 CIMPushManager.connect(context,"125.12.35.231",28888);
 
-
-
+```
+```java
 1.2绑定账号到服务端
     /**
 	 * 设置一个账号登录到服务端
@@ -69,8 +69,8 @@ public static  void bindAccount(Context context,String account)
 CIMPushManager.bindAccount(context,"xiyang");
 
 
-
-
+```
+```java
 1.3发送一个CIM请求
  酌情使用此功能，可用http接口替代
 
@@ -90,8 +90,8 @@ public static  void sendRequest(Context context,SentBody body)
 
 该功能需要服务端实现，详情参考服务端PullOflineMessageHandler.java
 
-
-
+```
+```java
 1.4停止接收消息
 
     /**
@@ -101,9 +101,9 @@ public static  void sendRequest(Context context,SentBody body)
     public static  void stop(Context context)
      示例：
      CIMPushManager.stop(context);    
-     
-     
-     
+      
+```
+```java    
 1.5恢复接收消息
 
    /**
@@ -114,7 +114,8 @@ public static  void sendRequest(Context context,SentBody body)
      示例：
      CIMPushManager.resume(context);    
 
-
+```
+```java
 
 1.6完全销毁连接
 
@@ -127,7 +128,8 @@ public static  void sendRequest(Context context,SentBody body)
      CIMPushManager.destroy(context);    
 
 
-
+```
+```java
 1.7获取是否与服务端连接正常
 
     /**
@@ -138,7 +140,8 @@ public static  void sendRequest(Context context,SentBody body)
 
    示例：
    CIMPushManager.isConnected(context);   
-
+```
+```java
 1.8获取PushManager状态
     //被销毁的destroy()
 	CIMPushManager.STATE_DESTROYED = 0x0000DE;
@@ -151,7 +154,8 @@ public static  void sendRequest(Context context,SentBody body)
 
    示例：
    CIMPushManager.getState(context);   
-
+```
+```java
 1.9推送消息以及相关事件的接收
 
 首先注册一个广播，并监听以下action 参照 后面androidManifest.xml配置
