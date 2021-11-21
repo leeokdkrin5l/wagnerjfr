@@ -44,7 +44,7 @@
 com.farsunset.cim.client.android.CIMPushManager
 ```java
 
-1.1连接服务器
+## 1.1连接服务器
    /**
      * 初始化,连接服务端，在程序启动页或者 在Application里调用
 	 * @param context
