@@ -42,158 +42,160 @@
 ### 常用功能接口
 所有开放外部接口都集中在
 com.farsunset.cim.client.android.CIMPushManager
-```java
+
 
 ## 1.1连接服务器
-   /**
-     * 初始化,连接服务端，在程序启动页或者 在Application里调用
-	 * @param context
-	 * @param ip
-	 * @param port
-	 */
-	public static  void connect(Context context,String ip,int port)
+```java
+/**
+* 初始化,连接服务端，在程序启动页或者 在Application里调用
+* @param context
+* @param ip
+* @param port
+*/
+public static  void connect(Context context,String ip,int port)
 
-示例
+//示例
 CIMPushManager.connect(context,"125.12.35.231",28888);
 
 ```
-```java
+
 1.2绑定账号到服务端
-    /**
-	 * 设置一个账号登录到服务端
-	 * @param account 用户唯一ID
-	 */
+```java
+/**
+* 设置一个账号登录到服务端
+* @param account 用户唯一ID
+*/
 public static  void bindAccount(Context context,String account)
 
-示例
+//示例
 CIMPushManager.bindAccount(context,"xiyang");
 
 
 ```
-```java
-1.3发送一个CIM请求
- 酌情使用此功能，可用http接口替代
 
-   /**
-	 * 发送一个CIM请求
-	 * @param context
-	 * @param ip
-	 * @param port
-	 */
+1.3发送一个CIM请求
+
+ 酌情使用此功能，可用http接口替代
+```java
+/**
+* 发送一个CIM请求
+* @param context 
+* @param body  请求体的结构
+*/
 public static  void sendRequest(Context context,SentBody body)
 
-示例：获取离线消息
-    SentBody sent = new SentBody();
-	sent.setKey(CIMConstant.RequestKey.CLIENT_OFFLINE_MESSAGE);
-	sent.put("account", "xiyang");
-	CIMPushManager.sendRequest(context, sent);
+//示例：获取离线消息
+SentBody sent = new SentBody();
+sent.setKey(CIMConstant.RequestKey.CLIENT_OFFLINE_MESSAGE);
+sent.put("account", "xiyang");
+CIMPushManager.sendRequest(context, sent);
 
-该功能需要服务端实现，详情参考服务端PullOflineMessageHandler.java
+//该功能需要服务端实现，详情参考服务端PullOflineMessageHandler.java
 
 ```
-```java
+
 1.4停止接收消息
 
-    /**
-	 * 停止接受推送，将会退出当前账号登录，端口与服务端的连接
-	 * @param context
-	 */
-    public static  void stop(Context context)
-     示例：
-     CIMPushManager.stop(context);    
+/**
+* 停止接受推送，将会退出当前账号登录，端口与服务端的连接
+* @param context
+*/
+public static  void stop(Context context)
+//示例：
+CIMPushManager.stop(context);    
       
 ```
 ```java    
 1.5恢复接收消息
-
-   /**
-     * 重新恢复接收推送，重新连接服务端，并登录当前账号
-     * @param context
-     */
-    public static  void resume(Context context)
-     示例：
-     CIMPushManager.resume(context);    
-
-```
 ```java
+/**
+* 重新恢复接收推送，重新连接服务端，并登录当前账号
+* @param context
+*/
+public static  void resume(Context context)
+//示例：
+CIMPushManager.resume(context);    
+```
+
 
 1.6完全销毁连接
-
-   /**
-	 * 完全销毁CIM，一般用于完全退出程序，调用resume将不能恢复
-	 * @param context
-	 */
-    public static  void destroy(Context context)
-     示例：
-     CIMPushManager.destroy(context);    
+```java
+/**
+* 完全销毁CIM，一般用于完全退出程序，调用resume将不能恢复
+* @param context
+*/
+public static  void destroy(Context context)
+//示例：
+CIMPushManager.destroy(context);    
 
 
 ```
-```java
 1.7获取是否与服务端连接正常
-
-    /**
-     *  
-     * @param context
-     */
-    public boolean isConnected(Context context)   
-
-   示例：
-   CIMPushManager.isConnected(context);   
-```
 ```java
+
+/**
+ *  
+ * @param context
+ */
+public boolean isConnected(Context context)   
+
+//示例：
+CIMPushManager.isConnected(context);   
+```
+
 1.8获取PushManager状态
-    //被销毁的destroy()
-	CIMPushManager.STATE_DESTROYED = 0x0000DE;
-	//被销停止的 stop()
-	CIMPushManager.STATE_STOPED = 0x0000EE;
-	
-	CIMPushManager.STATE_NORMAL = 0x000000;
-	
-    public int getState(Context context)   
-
-   示例：
-   CIMPushManager.getState(context);   
-```
 ```java
+//被销毁的destroy()
+CIMPushManager.STATE_DESTROYED = 0x0000DE;
+//被销停止的 stop()
+CIMPushManager.STATE_STOPED = 0x0000EE;
+	
+CIMPushManager.STATE_NORMAL = 0x000000;
+	
+public int getState(Context context)   
+
+//示例：
+CIMPushManager.getState(context);   
+```
+
 1.9推送消息以及相关事件的接收
 
 首先注册一个广播，并监听以下action 参照 后面androidManifest.xml配置
 
 参考CustomCIMMessageReceiver的实现
-    /**
-     * 当收到服务端推送过来的消息时调用
-     * @param message
-     */
-    public abstract void onMessageReceived(Message message);
+```java
+/**
+* 当收到服务端推送过来的消息时调用
+* @param message
+*/
+public abstract void onMessageReceived(Message message);
 
-    /**
-     * 当调用CIMPushManager.sendRequest()向服务端发送请求，获得相应时调用
-     * @param replybody
-     */
-    public abstract void onReplyReceived(ReplyBody replybody);
+/**
+* 当调用CIMPushManager.sendRequest()向服务端发送请求，获得相应时调用
+* @param replybody
+*/
+public abstract void onReplyReceived(ReplyBody replybody);
 
-    /**
-     * 当手机网络发生变化时调用
-     * @param networkinfo
-     */
-    public abstract void onNetworkChanged(NetworkInfo networkinfo);
+/**
+* 当手机网络发生变化时调用
+* @param networkinfo
+*/
+public abstract void onNetworkChanged(NetworkInfo networkinfo);
     
+/**
+* 当连接服务器成功时回调
+* @param hasAutoBind  : true 已经自动绑定账号到服务器了，不需要再手动调用bindAccount
+*/
+public abstract void onConnectionSuccessed(boolean hasAutoBind);
     
-    /**
-     * 当连接服务器成功时回调
-     * @param hasAutoBind  : true 已经自动绑定账号到服务器了，不需要再手动调用bindAccount
-     */
-    public abstract void onConnectionSuccessed(boolean hasAutoBind);
+/**
+* 当断开服务器连接的时候回调
+*/
+public abstract void onConnectionClosed();
     
-    /**
-     * 当断开服务器连接的时候回调
-     */
-    public abstract void onConnectionClosed();
-    
-    /**
-     * 当服务器连接失败的时候回调
-     * 
-     */
-    public abstract void onConnectionFailed(Exception e);
+/**
+* 当服务器连接失败的时候回调
+* 
+*/
+public abstract void onConnectionFailed(Exception e);
 ```
