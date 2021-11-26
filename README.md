@@ -44,7 +44,7 @@
 com.farsunset.cim.client.android.CIMPushManager
 
 
-## 1.1连接服务器
+#### 1.1连接服务器
 ```java
 /**
 * 初始化,连接服务端，在程序启动页或者 在Application里调用
@@ -95,7 +95,7 @@ CIMPushManager.sendRequest(context, sent);
 ```
 
 1.4停止接收消息
-
+```java  
 /**
 * 停止接受推送，将会退出当前账号登录，端口与服务端的连接
 * @param context
@@ -105,7 +105,6 @@ public static  void stop(Context context)
 CIMPushManager.stop(context);    
       
 ```
-```java    
 1.5恢复接收消息
 ```java
 /**
