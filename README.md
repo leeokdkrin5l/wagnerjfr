@@ -59,7 +59,7 @@ CIMPushManager.connect(context,"125.12.35.231",28888);
 
 ```
 
-1.2绑定账号到服务端
+#### 1.2绑定账号到服务端
 ```java
 /**
 * 设置一个账号登录到服务端
@@ -73,7 +73,7 @@ CIMPushManager.bindAccount(context,"xiyang");
 
 ```
 
-1.3发送一个CIM请求
+#### 1.3发送一个CIM请求
 
  酌情使用此功能，可用http接口替代
 ```java
@@ -94,7 +94,7 @@ CIMPushManager.sendRequest(context, sent);
 
 ```
 
-1.4停止接收消息
+#### 1.4停止接收消息
 ```java  
 /**
 * 停止接受推送，将会退出当前账号登录，端口与服务端的连接
@@ -105,7 +105,7 @@ public static  void stop(Context context)
 CIMPushManager.stop(context);    
       
 ```
-1.5恢复接收消息
+#### 1.5恢复接收消息
 ```java
 /**
 * 重新恢复接收推送，重新连接服务端，并登录当前账号
@@ -117,7 +117,7 @@ CIMPushManager.resume(context);
 ```
 
 
-1.6完全销毁连接
+#### 1.6完全销毁连接
 ```java
 /**
 * 完全销毁CIM，一般用于完全退出程序，调用resume将不能恢复
@@ -129,7 +129,7 @@ CIMPushManager.destroy(context);
 
 
 ```
-1.7获取是否与服务端连接正常
+#### 1.7获取是否与服务端连接正常
 ```java
 
 /**
@@ -142,7 +142,7 @@ public boolean isConnected(Context context)
 CIMPushManager.isConnected(context);   
 ```
 
-1.8获取PushManager状态
+#### 1.8获取PushManager状态
 ```java
 //被销毁的destroy()
 CIMPushManager.STATE_DESTROYED = 0x0000DE;
@@ -157,7 +157,7 @@ public int getState(Context context)
 CIMPushManager.getState(context);   
 ```
 
-1.9推送消息以及相关事件的接收
+#### 1.9推送消息以及相关事件的接收
 
 首先注册一个广播，并监听以下action 参照 后面androidManifest.xml配置
 
