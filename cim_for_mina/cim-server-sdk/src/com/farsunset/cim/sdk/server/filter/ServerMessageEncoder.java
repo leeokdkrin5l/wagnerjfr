@@ -21,13 +21,15 @@
  */
 package com.farsunset.cim.sdk.server.filter;
 
-import org.apache.log4j.Logger;
+import java.util.Objects;
+
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
 import org.apache.mina.filter.codec.ProtocolEncoderOutput;
+
 import com.farsunset.cim.sdk.server.constant.CIMConstant;
-import com.farsunset.cim.sdk.server.model.WebsocketResponse;
+import com.farsunset.cim.sdk.server.model.HandshakerResponse;
 import com.farsunset.cim.sdk.server.model.feature.EncodeFormatable;
 import com.farsunset.cim.sdk.server.session.CIMSession;
 
@@ -36,46 +38,47 @@ import com.farsunset.cim.sdk.server.session.CIMSession;
  */
 public class ServerMessageEncoder extends ProtocolEncoderAdapter {
 
-	protected final Logger logger = Logger.getLogger(ServerMessageEncoder.class);
 
 	@Override
 	public void encode(IoSession iosession, Object object, ProtocolEncoderOutput out) throws Exception {
 
-		Object channel = iosession.getAttribute("channel");
+		Object protocol = iosession.getAttribute(CIMSession.PROTOCOL);
 
 		/**
 		 * websocket的握手响应
 		 */
-		if (CIMSession.CHANNEL_BROWSER.equals(channel) && object instanceof WebsocketResponse) {
-			WebsocketResponse data = (WebsocketResponse) object;
+		if (Objects.equals(CIMSession.WEBSOCKET, protocol) && object instanceof HandshakerResponse) {
+			HandshakerResponse data = (HandshakerResponse) object;
 			byte[] byteArray = data.getBytes();
 			IoBuffer buff = IoBuffer.allocate(byteArray.length).setAutoExpand(true);
 			buff.put(byteArray);
 			buff.flip();
 			out.write(buff);
-			logger.info(data.toString());
 		}
 
 		/**
-		 * websocket的数据传输使用JSON编码数据格式，因为Protobuf还没有支持js
+		 * websocket的业务数据
 		 */
-		if (CIMSession.CHANNEL_BROWSER.equals(channel) && object instanceof EncodeFormatable) {
+		if (Objects.equals(CIMSession.WEBSOCKET, protocol) && object instanceof EncodeFormatable) {
 			EncodeFormatable data = (EncodeFormatable) object;
-			byte[] byteArray = encodeDataFrame(data.getJSONBody());
-			IoBuffer buff = IoBuffer.allocate(byteArray.length).setAutoExpand(true);
-			/**
-			 * 由于websocket没有黏包和断包的问题，所以不必知道消息体的大小
-			 */
-			buff.put(byteArray);
-			buff.flip();
-			out.write(buff);
-			logger.info(data.toString());
+			
+			byte[] body = data.getProtobufBody();
+			byte[] header = createHeader(data.getDataType(), body.length);
+			byte[] protobuf = new byte[body.length + CIMConstant.DATA_HEADER_LENGTH];
+			System.arraycopy(header, 0, protobuf, 0, header.length);
+			System.arraycopy(body,0, protobuf, header.length, body.length);
+		 
+			byte[] binaryFrame = encodeDataFrame(protobuf);
+			IoBuffer buffer = IoBuffer.allocate(binaryFrame.length);
+			buffer.put(binaryFrame);
+			buffer.flip();
+			out.write(buffer);
 		}
 
 		/**
 		 * 非websocket的数据传输使用Protobuf编码数据格式
 		 */
-		if (!CIMSession.CHANNEL_BROWSER.equals(channel) && object instanceof EncodeFormatable) {
+		if (!Objects.equals(CIMSession.WEBSOCKET, protocol) && object instanceof EncodeFormatable) {
 
 			EncodeFormatable data = (EncodeFormatable) object;
 			byte[] byteArray = data.getProtobufBody();
@@ -85,7 +88,6 @@ public class ServerMessageEncoder extends ProtocolEncoderAdapter {
 
 			buff.flip();
 			out.write(buff);
-			logger.info(data.toString());
 		}
 	}
 
@@ -128,7 +130,7 @@ public class ServerMessageEncoder extends ProtocolEncoderAdapter {
 
 		// 开始计算ws-frame
 		// frame-fin + frame-rsv1 + frame-rsv2 + frame-rsv3 + frame-opcode
-		result[0] = (byte) 0x81; // 129
+		result[0] = (byte) 0x82; // 0x82 二进制帧   0x80 文本帧
 
 		// frame-masked+frame-payload-length
 		// 从第9个字节开始是 1111101=125,掩码是第3-第6个数据

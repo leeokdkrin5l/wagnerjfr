@@ -21,7 +21,8 @@
  */
 package com.farsunset.cim.sdk.server.filter.decoder;
 
-import org.apache.log4j.Logger;
+import java.util.Objects;
+
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
@@ -32,17 +33,28 @@ import com.farsunset.cim.sdk.server.constant.CIMConstant;
 import com.farsunset.cim.sdk.server.model.HeartbeatResponse;
 import com.farsunset.cim.sdk.server.model.SentBody;
 import com.farsunset.cim.sdk.server.model.proto.SentBodyProto;
+import com.farsunset.cim.sdk.server.session.CIMSession;
 
 /**
- * 服务端接收消息解码
+ * 原生app发送的消息解码器
  */
 public class AppMessageDecoder extends MessageDecoderAdapter {
 
-	protected final Logger logger = Logger.getLogger(AppMessageDecoder.class);
 
 	@Override
 	public MessageDecoderResult decodable(IoSession arg0, IoBuffer iobuffer) {
-
+		
+		/**
+		 * 如果是Websocket客户端，则不作处理，由WebMessageDecoder进行处理
+		 */
+		if(Objects.equals(arg0.getAttribute(CIMSession.PROTOCOL), CIMSession.WEBSOCKET)) {
+			return NOT_OK;
+		}
+		
+		if(Objects.equals(arg0.getAttribute(CIMSession.PROTOCOL), CIMSession.NATIVEAPP)) {
+			return OK;
+		}
+		
 		if (iobuffer.remaining() < CIMConstant.DATA_HEADER_LENGTH) {
 			return NEED_DATA;
 		}
@@ -54,8 +66,9 @@ public class AppMessageDecoder extends MessageDecoderAdapter {
 		if (conetnType == CIMConstant.ProtobufType.C_H_RS || conetnType == CIMConstant.ProtobufType.SENTBODY) {
 			return OK;
 		}
-
+		
 		return NOT_OK;
+		
 	}
 
 	@Override
@@ -80,6 +93,7 @@ public class AppMessageDecoder extends MessageDecoderAdapter {
 
 		Object message = mappingMessageObject(dataBytes, conetnType);
 		if (message != null) {
+			iosession.setAttribute(CIMSession.PROTOCOL,CIMSession.NATIVEAPP);
 			out.write(message);
 		}
 		return OK;
@@ -89,7 +103,6 @@ public class AppMessageDecoder extends MessageDecoderAdapter {
 
 		if (CIMConstant.ProtobufType.C_H_RS == type) {
 			HeartbeatResponse response = HeartbeatResponse.getInstance();
-			logger.info(response.toString());
 			return response;
 		}
 
@@ -99,8 +112,6 @@ public class AppMessageDecoder extends MessageDecoderAdapter {
 			body.setKey(bodyProto.getKey());
 			body.setTimestamp(bodyProto.getTimestamp());
 			body.putAll(bodyProto.getDataMap());
-			logger.info(body.toString());
-
 			return body;
 		}
 		return null;

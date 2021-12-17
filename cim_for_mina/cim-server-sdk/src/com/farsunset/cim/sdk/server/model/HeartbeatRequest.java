@@ -22,8 +22,6 @@
 package com.farsunset.cim.sdk.server.model;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-
 import com.farsunset.cim.sdk.server.constant.CIMConstant;
 import com.farsunset.cim.sdk.server.model.feature.EncodeFormatable;
 
@@ -54,16 +52,6 @@ public class HeartbeatRequest implements Serializable, EncodeFormatable {
 
 	public String toString() {
 		return TAG;
-	}
-
-	@Override
-	public byte[] getJSONBody() {
-		try {
-			return CMD_HEARTBEAT_RESPONSE.getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	@Override

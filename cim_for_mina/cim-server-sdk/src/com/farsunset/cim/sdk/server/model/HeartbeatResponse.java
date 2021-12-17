@@ -44,5 +44,12 @@ public class HeartbeatResponse implements Serializable {
 	public String toString() {
 		return TAG;
 	}
+	
+	public  static void main(String[] a) {
+		byte[] data = "CR".getBytes();
+		for(byte v: data) {
+			System.out.println(v);
+		}
+	}
 
 }

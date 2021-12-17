@@ -20,150 +20,241 @@
  ***************************************************************************************
  */
 package com.farsunset.cim.sdk.server.filter.decoder;
-
-import java.io.UnsupportedEncodingException;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 import org.apache.mina.filter.codec.demux.MessageDecoderAdapter;
 import org.apache.mina.filter.codec.demux.MessageDecoderResult;
-import com.alibaba.fastjson.JSON;
 import com.farsunset.cim.sdk.server.constant.CIMConstant;
 import com.farsunset.cim.sdk.server.handler.CIMNioSocketAcceptor;
 import com.farsunset.cim.sdk.server.model.HeartbeatResponse;
 import com.farsunset.cim.sdk.server.model.SentBody;
+import com.farsunset.cim.sdk.server.model.proto.SentBodyProto;
+import com.farsunset.cim.sdk.server.session.CIMSession;
+import com.google.protobuf.InvalidProtocolBufferException;
 
 /**
- * 服务端接收消息解码
+ * Websocket协议消息解码
  */
 public class WebMessageDecoder extends MessageDecoderAdapter {
 	public static final byte MASK = 0x1;// 1000 0000
 	public static final byte HAS_EXTEND_DATA = 126;
 	public static final byte HAS_EXTEND_DATA_CONTINUE = 127;
 	public static final byte PAYLOADLEN = 0x7F;// 0111 1111
-	public static final Pattern SEC_KEY_PATTERN = Pattern.compile("^(Sec-WebSocket-Key:).+",
-			Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+	
+	public static final byte TAG_MASK = 0x0F;// 0000 1111  > 15
 
-	protected final Logger logger = Logger.getLogger(WebMessageDecoder.class);
+    private static final byte OPCODE_BINARY = 0x2;
+    private static final byte OPCODE_CLOSE = 0x8;
+
+    
+	public static final Pattern SEC_KEY_PATTERN = Pattern.compile("^(Sec-WebSocket-Key:).+",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+	public static final Pattern UPGRADE_PATTERN = Pattern.compile("^(Upgrade:).+",Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+	public static final String HANDSHAKE_FRAME = "HANDSHAKE_FRAME";
+
 
 	@Override
 	public MessageDecoderResult decodable(IoSession arg0, IoBuffer iobuffer) {
-		if (iobuffer.remaining() < 2) {
-			return NEED_DATA;
-		}
-
+		
 		/**
-		 * 原生SDK只会发送2种类型消息 1个心跳类型 另一个是sendbody，报文的第一个字节为消息类型
-		 * 如果非原生sdk发出的消息，则认为是websocket发送的消息 websocket发送的消息 第一个字节不可能等于C_H_RS或者SENTBODY
+		 * 如果是Websocket客户端，则不作处理，由WebMessageDecoder进行处理
 		 */
-		byte conetnType = iobuffer.get();
-		if (conetnType == CIMConstant.ProtobufType.C_H_RS || conetnType == CIMConstant.ProtobufType.SENTBODY) {
+		if(Objects.equals(arg0.getAttribute(CIMSession.PROTOCOL), CIMSession.WEBSOCKET)) {
+			return OK;
+		}
+		
+		if(Objects.equals(arg0.getAttribute(CIMSession.PROTOCOL), CIMSession.NATIVEAPP)) {
 			return NOT_OK;
 		}
-
-		byte head = iobuffer.get();// 第二个字节
-		byte datalength = (byte) (head & PAYLOADLEN);// 得到第二个字节后七位的值
-		int length = 0;
-		if (datalength < HAS_EXTEND_DATA) {// 第一种是消息内容少于126存储消息长度
-			length = datalength;
-		} else if (datalength == HAS_EXTEND_DATA) {// 第二种是消息长度大于等于126且少于UINT16的情况此值为126
-			if (iobuffer.remaining() < 2) {
-				return NEED_DATA;
-			}
-			byte[] extended = new byte[2];
-			iobuffer.get(extended);
-			int shift = 0;
-			length = 0;
-			for (int i = extended.length - 1; i >= 0; i--) {
-				length = length + ((extended[i] & 0xFF) << shift);
-				shift += 8;
-			}
-		} else if (datalength == HAS_EXTEND_DATA_CONTINUE) {// 第三种是消息长度大于UINT16的情况下此值为127
-			if (iobuffer.remaining() < 4) {
-				return NEED_DATA;
-			}
-			byte[] extended = new byte[4];
-			iobuffer.get(extended);
-			int shift = 0;
-			length = 0;
-			for (int i = extended.length - 1; i >= 0; i--) {
-				length = length + ((extended[i] & 0xFF) << shift);
-				shift += 8;
-			}
-		}
-
-		int ismask = head >> 7 & MASK;// 得到第二个字节第一位的值
-		if ((ismask == 1 && iobuffer.remaining() < 4 + length) || (ismask == 0 && iobuffer.remaining() < length)) {// 有掩码
-			return NEED_DATA;
-		}
-		return OK;
+		
+		/**
+		 * 判断是否是websocket连接发送的数据
+		 */
+		String data = new String(iobuffer.array());
+		boolean handShake = getSecWebSocketKey(data) != null && Objects.equals(getUpgradeProtocol(data),CIMSession.WEBSOCKET);
+		if(handShake) {
+			arg0.setAttribute(HANDSHAKE_FRAME, handShake);
+			return OK;
+		} 
+		 
+		return NOT_OK;
 	}
 
 	@Override
-	public MessageDecoderResult decode(IoSession iosession, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
-		in.get();
-		byte head = in.get();
-		byte datalength = (byte) (head & PAYLOADLEN);
-		if (datalength < HAS_EXTEND_DATA) {
-		} else if (datalength == HAS_EXTEND_DATA) {
-			in.get(new byte[2]);
-		} else if (datalength == HAS_EXTEND_DATA_CONTINUE) {
-			in.get(new byte[4]);
+	public MessageDecoderResult decode(IoSession iosession, IoBuffer in, ProtocolDecoderOutput out) throws InvalidProtocolBufferException{
+		
+		/**
+		 * 判断是否是握手请求
+		 */
+		if(Objects.equals(iosession.getAttribute(HANDSHAKE_FRAME), true)) {
+			
+			handleHandshake(iosession,in, out);
+
+			return OK;
 		}
-
-		int ismask = head >> 7 & MASK;
-		byte[] data = null;
-		if (ismask == 1) {// 有掩码
-			// 获取掩码
-			byte[] mask = new byte[4];
-			in.get(mask);
-
-			data = new byte[in.remaining()];
-			in.get(data);
-			for (int i = 0; i < data.length; i++) {
-				// 数据进行异或运算
-				data[i] = (byte) (data[i] ^ mask[i % 4]);
+		
+		
+		in.mark();
+		
+		/**
+		 * 接下来判断fin标志位是否是1 如果是0 则等待消息接收完成
+		 */
+		byte tag = in.get();
+		int frameFin = tag  > 0 ?  0 : 1; //有符号byte 第一位为1则为负数 第一位为0则为正数，以此 判断fin字段是 0 还是 1
+		if(frameFin == 0) {
+			in.reset();
+			return NEED_DATA;
+		}
+		
+		/**
+		 * 获取帧类型，因为使用了protobuf，所以只支持二进制帧 OPCODE_BINARY，以及客户端关闭连接帧通知 OPCODE_CLOSE
+		 */
+		int frameOqcode = tag & TAG_MASK;
+		
+		if(OPCODE_BINARY == frameOqcode) {
+			
+			byte head = in.get();
+			byte datalength = (byte) (head & PAYLOADLEN);
+			int realLength = 0;
+			
+			/**
+			 *Payload len，7位或者7+16位或者7+64位，表示数据帧中数据大小，这里有好几种情况。
+			 *如果值为0-125，那么该值就是payload data的真实长度。
+			 *如果值为126，那么该7位后面紧跟着的2个字节就是payload data的真实长度。
+			 *如果值为127，那么该7位后面紧跟着的8个字节就是payload data的真实长度。
+			 */
+			if (datalength == HAS_EXTEND_DATA) {
+				realLength = in.getShort();
+			} else if (datalength == HAS_EXTEND_DATA_CONTINUE) {
+				realLength = (int) in.getLong();
+			}else {
+				realLength = datalength;
 			}
-			handleSentBodyAndHeartPing(data, out);
-		} else {
-			data = new byte[in.remaining()];
-			in.get(data);
-			handleWebsocketHandshake(new String(data, "UTF-8"), out);
+
+			boolean masked = (head >> 7 & MASK) == 1;
+			if (masked) {// 有掩码
+				// 获取掩码
+				byte[] mask = new byte[4];
+				in.get(mask);
+				
+				byte[] data = new byte[realLength];
+				in.get(data);
+				for (int i = 0; i < realLength; i++) {
+					// 数据进行异或运算
+					data[i] = (byte) (data[i] ^ mask[i % 4]);
+				}
+				
+				handleMessage(data,out);
+			}
+			
+		}else if(OPCODE_CLOSE == frameOqcode) {
+        	handleClose(iosession,in);
+		}else {
+			//忽略其他类型的消息
+			in.get(new byte[in.remaining()]);
 		}
+ 
 		return OK;
 	}
 
-	private void handleWebsocketHandshake(String message, ProtocolDecoderOutput out) {
-		SentBody body = new SentBody();
-		body.setKey(CIMNioSocketAcceptor.WEBSOCKET_HANDLER_KEY);
-
+	
+	
+	/**
+	 * 通过正则获取websocket握手消息中的Sec-WebSocket-Key
+	 * @param message
+	 * @return
+	 */
+	private String getSecWebSocketKey(String message) {
 		Matcher m = SEC_KEY_PATTERN.matcher(message);
 		if (m.find()) {
-			String foundstring = m.group();
-			body.put("key", foundstring.split(":")[1].trim());
+			return m.group().split(":")[1].trim();
 		}
-		out.write(body);
+		return null;
 	}
 
-	public void handleSentBodyAndHeartPing(byte[] data, ProtocolDecoderOutput out) throws UnsupportedEncodingException {
-		String message = new String(data, "UTF-8");
+	/**
+	 * 通过正则获取websocket握手消息中的 Upgrade 值 预期为websocket
+	 * @param message
+	 * @return
+	 */
+	private String getUpgradeProtocol(String message) {
+		Matcher m = UPGRADE_PATTERN.matcher(message);
+		if (m.find()) {
+			return m.group().split(":")[1].trim();
+		}
+		return null;
+	}
+
+	
+   private void handleHandshake(IoSession iosession, IoBuffer in, ProtocolDecoderOutput out) {
+		
+		byte[] data = new byte[in.remaining()];
+		in.get(data);
+		String message = new String(data);
+		
+		/**
+		 * 重要，握手响应之后，删除标志HANDSHAKE_FRAME,并标记当前session的协议为websocket
+		 */
+		iosession.removeAttribute(HANDSHAKE_FRAME);
+		iosession.setAttribute(CIMSession.PROTOCOL,CIMSession.WEBSOCKET);
+
+		SentBody body = new SentBody();
+		body.setKey(CIMNioSocketAcceptor.WEBSOCKET_HANDLER_KEY);
+		body.setTimestamp(System.currentTimeMillis());
+		body.put("key", getSecWebSocketKey(message));
+		out.write(body);
+	}
+   
+   private void handleClose(IoSession iosession, IoBuffer in) {
+		
+		in.get(new byte[in.remaining()]);
+		iosession.closeOnFlush();
+	}
+   
+	public void handleMessage(byte[] data, ProtocolDecoderOutput out) throws InvalidProtocolBufferException{
+		byte type = data[0];
 
 		/**
 		 * 只处理心跳响应以及，sentbody消息
 		 */
-		if (HeartbeatResponse.CMD_HEARTBEAT_RESPONSE.equals(message)) {
+		if (type == CIMConstant.ProtobufType.C_H_RS) {
 			HeartbeatResponse response = HeartbeatResponse.getInstance();
-			logger.info(response.toString());
 			out.write(response);
-		} else if (data.length > 2) {
-			SentBody body = JSON.parseObject(message, SentBody.class);
-			logger.info(body.toString());
+		}
+
+		if (type == CIMConstant.ProtobufType.SENTBODY) {
+			
+			int length = getContentLength( data[1], data[2]);
+			byte[] protobuf = new byte[length];
+			System.arraycopy(data, CIMConstant.DATA_HEADER_LENGTH, protobuf, 0, length);
+			
+			SentBodyProto.Model bodyProto = SentBodyProto.Model.parseFrom(protobuf);
+			SentBody body = new SentBody();
+			body.setKey(bodyProto.getKey());
+			body.setTimestamp(bodyProto.getTimestamp());
+			body.putAll(bodyProto.getDataMap());
 			out.write(body);
+			
 		}
 
 	}
+	
+	/**
+	 * 解析消息体长度
+	 * 
+	 * @param type
+	 * @param length
+	 * @return
+	 */
+	private int getContentLength(byte lv, byte hv) {
+		int l = (lv & 0xff);
+		int h = (hv & 0xff);
+		return (l | (h <<= 8));
+	}
+
+	
 }

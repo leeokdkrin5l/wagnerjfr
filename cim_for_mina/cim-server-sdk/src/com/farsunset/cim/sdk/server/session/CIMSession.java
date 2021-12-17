@@ -41,8 +41,11 @@ public class CIMSession implements Serializable {
 	 * 
 	 */
 	private transient static final long serialVersionUID = 1L;
-	public transient static String ID = "ID";
-	public transient static String HOST = "HOST";
+	
+	public transient static String PROTOCOL = "protocol";
+	public transient static String WEBSOCKET = "websocket";
+	public transient static String NATIVEAPP = "nativeapp";
+
 	public transient static final int STATUS_ENABLED = 0;
 	public transient static final int STATUS_DISABLED = 1;
 	public transient static final int APNS_ON = 1;
@@ -72,7 +75,7 @@ public class CIMSession implements Serializable {
 	private Double latitude;// 维度
 	private String location;// 位置
 	private int apnsAble;// apns推送状态
-	private int status;// 状态
+	private int state;// 状态
 
 	public CIMSession(IoSession session) {
 		this.session = session;
@@ -149,7 +152,6 @@ public class CIMSession implements Serializable {
 
 	public void setChannel(String channel) {
 		this.channel = channel;
-
 		setAttribute("channel", channel);
 	}
 
@@ -224,13 +226,13 @@ public class CIMSession implements Serializable {
 		setAttribute("apnsAble", apnsAble);
 	}
 
-	public int getStatus() {
-		return status;
+	public int getState() {
+		return state;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
-		setAttribute("status", status);
+	public void setState(int state) {
+		this.state = state;
+		setAttribute("state", state);
 	}
 
 	public void setAttribute(String key, Object value) {
@@ -277,7 +279,7 @@ public class CIMSession implements Serializable {
 		}
 
 		if (!isLocalhost()) {
-			return status == STATUS_ENABLED;
+			return state == STATUS_ENABLED;
 		}
 
 		return false;
@@ -362,9 +364,8 @@ public class CIMSession implements Serializable {
 		buffer.append("\"").append("host").append("\":").append("\"").append(host).append("\"").append(",");
 		buffer.append("\"").append("account").append("\":").append("\"").append(account).append("\"").append(",");
 		buffer.append("\"").append("channel").append("\":").append("\"").append(channel).append("\"").append(",");
-		buffer.append("\"").append("deviceModel").append("\":").append("\"").append(deviceModel).append("\"")
-				.append(",");
-		buffer.append("\"").append("status").append("\":").append(status).append(",");
+		buffer.append("\"").append("deviceModel").append("\":").append("\"").append(deviceModel).append("\"").append(",");
+		buffer.append("\"").append("status").append("\":").append(state).append(",");
 		buffer.append("\"").append("apnsAble").append("\":").append(apnsAble).append(",");
 		buffer.append("\"").append("bindTime").append("\":").append(bindTime).append(",");
 		buffer.append("\"").append("heartbeat").append("\":").append(heartbeat);
