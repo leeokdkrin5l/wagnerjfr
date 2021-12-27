@@ -101,7 +101,6 @@ public class CIMSession implements Serializable {
 	}
 
 	public void setLongitude(Double longitude) {
-		setAttribute("longitude", longitude);
 		this.longitude = longitude;
 	}
 
@@ -110,7 +109,6 @@ public class CIMSession implements Serializable {
 	}
 
 	public void setLatitude(Double latitude) {
-		setAttribute("latitude", latitude);
 		this.latitude = latitude;
 	}
 
@@ -119,7 +117,6 @@ public class CIMSession implements Serializable {
 	}
 
 	public void setLocation(String location) {
-		setAttribute("location", location);
 		this.location = location;
 	}
 
@@ -152,7 +149,6 @@ public class CIMSession implements Serializable {
 
 	public void setChannel(String channel) {
 		this.channel = channel;
-		setAttribute("channel", channel);
 	}
 
 	public String getDeviceModel() {
@@ -161,14 +157,11 @@ public class CIMSession implements Serializable {
 
 	public void setDeviceModel(String deviceModel) {
 		this.deviceModel = deviceModel;
-
-		setAttribute("deviceModel", deviceModel);
 	}
 
 	public void setDeviceId(String deviceId) {
 		this.deviceId = deviceId;
 
-		setAttribute("deviceId", deviceId);
 	}
 
 	public String getHost() {
@@ -181,7 +174,6 @@ public class CIMSession implements Serializable {
 
 	public void setBindTime(Long bindTime) {
 		this.bindTime = bindTime;
-		setAttribute("bindTime", bindTime);
 	}
 
 	public String getClientVersion() {
@@ -190,7 +182,6 @@ public class CIMSession implements Serializable {
 
 	public void setClientVersion(String clientVersion) {
 		this.clientVersion = clientVersion;
-		setAttribute("clientVersion", clientVersion);
 	}
 
 	public String getSystemVersion() {
@@ -199,7 +190,6 @@ public class CIMSession implements Serializable {
 
 	public void setSystemVersion(String systemVersion) {
 		this.systemVersion = systemVersion;
-		setAttribute("systemVersion", systemVersion);
 	}
 
 	public Long getHeartbeat() {
@@ -213,8 +203,6 @@ public class CIMSession implements Serializable {
 
 	public void setHost(String host) {
 		this.host = host;
-
-		setAttribute("host", host);
 	}
 
 	public int getApnsAble() {
@@ -223,7 +211,6 @@ public class CIMSession implements Serializable {
 
 	public void setApnsAble(int apnsAble) {
 		this.apnsAble = apnsAble;
-		setAttribute("apnsAble", apnsAble);
 	}
 
 	public int getState() {
@@ -232,7 +219,6 @@ public class CIMSession implements Serializable {
 
 	public void setState(int state) {
 		this.state = state;
-		setAttribute("state", state);
 	}
 
 	public void setAttribute(String key, Object value) {
@@ -309,7 +295,6 @@ public class CIMSession implements Serializable {
 
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
-		setAttribute("packageName", apnsAble);
 	}
 
 	public String getPackageName() {

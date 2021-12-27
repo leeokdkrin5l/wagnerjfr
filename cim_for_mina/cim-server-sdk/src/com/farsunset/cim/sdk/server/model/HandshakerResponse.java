@@ -21,7 +21,6 @@
  */
 package com.farsunset.cim.sdk.server.model;
 
-import java.io.UnsupportedEncodingException;
 
 /**
  * websocket握手响应结果
@@ -36,12 +35,7 @@ public class HandshakerResponse {
 	}
 
 	public byte[] getBytes() {
-		try {
-			return toString().getBytes("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return toString().getBytes();
 	}
 
 	@Override

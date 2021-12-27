@@ -35,10 +35,10 @@ import org.apache.mina.filter.codec.ProtocolCodecFilter;
 import org.apache.mina.filter.executor.ExecutorFilter;
 import org.apache.mina.filter.keepalive.KeepAliveFilter;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
-import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.DefaultSocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
+import com.farsunset.cim.sdk.server.filter.CIMLoggingFilter;
 import com.farsunset.cim.sdk.server.filter.ServerMessageCodecFactory;
 import com.farsunset.cim.sdk.server.model.HeartbeatRequest;
 import com.farsunset.cim.sdk.server.model.HeartbeatResponse;
@@ -83,7 +83,7 @@ public class CIMNioSocketAcceptor extends IoHandlerAdapter implements KeepAliveM
 
 		acceptor.getFilterChain().addLast("executor", new ExecutorFilter(Executors.newCachedThreadPool()));
 		acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ServerMessageCodecFactory()));
-		acceptor.getFilterChain().addLast("logger", new LoggingFilter());
+		acceptor.getFilterChain().addLast("logger", new CIMLoggingFilter());
 		acceptor.getFilterChain().addLast("heartbeat", keepAliveFilter);
 
 		acceptor.setHandler(this);

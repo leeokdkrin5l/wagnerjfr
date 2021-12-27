@@ -34,7 +34,6 @@ public class HeartbeatResponse implements Serializable {
 	private static HeartbeatResponse object = new HeartbeatResponse();
 
 	private HeartbeatResponse() {
-
 	}
 
 	public static HeartbeatResponse getInstance() {
@@ -44,12 +43,5 @@ public class HeartbeatResponse implements Serializable {
 	public String toString() {
 		return TAG;
 	}
-	
-	public  static void main(String[] a) {
-		byte[] data = "CR".getBytes();
-		for(byte v: data) {
-			System.out.println(v);
-		}
-	}
-
+	 
 }
