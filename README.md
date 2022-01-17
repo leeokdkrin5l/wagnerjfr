@@ -9,8 +9,8 @@ CIM是基于mina和netty框架下的推送系统，我们平常使用第三方�
 3. doc目录中是相关使用文档，以及protubuf结构体文件
 5. cim-android-sdk 是android客户端封装的的jar包
 6. cim-java-sdk 是java版客户端封装的的jar包
-7. cim-server-sdk 是cim-server 用到的封装的jar
-8. cim-boot-server是springboot服务端工程，是eclipse4.x基于gradle构建插件
+7. cim-server-sdk 是cim-boot-server 用到的封装的jar
+8. cim-boot-server是springboot服务端工程，是intellij idea基于maven构建
 9. cim-client-android 是android客户端  android studio工具
 10. 说明.txt是服务端环境搭建说明
 
@@ -28,11 +28,11 @@ CIM是基于mina和netty框架下的推送系统，我们平常使用第三方�
 #### 功能预览
 
 1.控制台页面
-![image](http://staticres.oss-cn-hangzhou.aliyuncs.com/cim-server.png)
+![image](https://images.gitee.com/uploads/images/2019/0315/165050_9e269c1c_58912.png)
 2.Android客户端
-![image](http://staticres.oss-cn-hangzhou.aliyuncs.com/cim-android_client.png)
+![image](https://images.gitee.com/uploads/images/2019/0315/165050_6f20f69e_58912.png)
 3.Web客户端
-![image](http://staticres.oss-cn-hangzhou.aliyuncs.com/cim-server-message.png)
+![image](https://images.gitee.com/uploads/images/2019/0315/165050_dfc33c18_58912.png)
 
 
 #### 更新日志
