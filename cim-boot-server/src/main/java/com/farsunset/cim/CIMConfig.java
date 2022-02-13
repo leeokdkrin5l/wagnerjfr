@@ -26,12 +26,6 @@ public class CIMConfig implements CIMRequestHandler {
 	private int port;
 
 	@Resource
-	private BindHandler bindHandler;
-	
-	@Resource
-	private SessionClosedHandler closedHandler;
-	
-	@Resource
 	private ApplicationContext applicationContext;
 	
 	private HashMap<String,Class<? extends CIMRequestHandler>> appHandlerMap = new HashMap<>();
@@ -63,8 +57,8 @@ public class CIMConfig implements CIMRequestHandler {
 	 * @return
 	 */
 	@Bean("cimSessionService") 
-	public CIMSessionService getCIMSessionService(@Qualifier("memorySessionService") CIMSessionService cimSessionService) {
-		return cimSessionService;
+	public CIMSessionService getCIMSessionService(@Qualifier("memorySessionService") CIMSessionService memorySessionService) {
+		return memorySessionService;
 		
 	}
 
