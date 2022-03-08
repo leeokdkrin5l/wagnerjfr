@@ -6,9 +6,9 @@ CIM是基于mina或者netty框架下的推送系统，我们平常使用第三�
 侣信专业版是基于CIM面向中小企业和者各类团队组织内部交流使用工具。具有丰富的功能，聊天，群组，部门组织，内部朋友圈等功能。它可以在局域网内使用保证沟通的信息安全，并且它是完全免费的，而且可以及时获得更新。
 ## [http://farsunset.com](http://farsunset.com)
 <div align="center">
-   <img src="http://staticres.oss-cn-hangzhou.aliyuncs.com/hoxin/session.jpg" width="280px"  />
-   <img src="http://staticres.oss-cn-hangzhou.aliyuncs.com/hoxin/contacts.jpg" width="280px" />
-   <img src="http://staticres.oss-cn-hangzhou.aliyuncs.com/hoxin/moment_timeline.jpg" width="280px" />
+   <img src="https://images.gitee.com/uploads/images/2020/0302/161713_b52546d5_58912.jpeg" width="280px"  />
+   <img src="https://images.gitee.com/uploads/images/2020/0302/161713_bed16da0_58912.jpeg" width="280px" />
+   <img src="https://images.gitee.com/uploads/images/2020/0302/161713_966e177b_58912.jpeg" width="280px" />
 </div>
 
 ---  
@@ -23,7 +23,7 @@ CIM是基于mina或者netty框架下的推送系统，我们平常使用第三�
 
 4.cim-boot-server是springboot服务端工程源码,使用Idea工具开发
 
-其中所有的sdk均为Eclipse工程，打包成jar导出引入到对应的客户端或服务端工程
+其中所有的sdk均为IntelliJ IDEA工程，Maven打包成jar导出引入到对应的客户端或服务端工程
 
 
 
