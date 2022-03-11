@@ -34,7 +34,7 @@ CIM是基于mina或者netty框架下的推送系统，我们平常使用第三�
 
 #### 功能预览
 
-1.控制台页面
+1.控制台页面[http://127.0.0.1:8080](http://127.0.0.1:8080)
 ![image](https://images.gitee.com/uploads/images/2019/0315/165050_9e269c1c_58912.png)
 2.Android客户端
 ![image](https://images.gitee.com/uploads/images/2019/0315/165050_6f20f69e_58912.png)
