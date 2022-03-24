@@ -144,7 +144,7 @@ class CIMConnectorManager {
                 /*
                  *read 返回 <= 0的情况，发生了意外需要断开重链
                  */
-                closeSession();
+                close();
 
             } catch (ConnectException | SocketTimeoutException ignore) {
                 handleConnectAbortedEvent();
@@ -154,11 +154,7 @@ class CIMConnectorManager {
         });
     }
 
-    public void destroy() {
-        closeSession();
-    }
-
-    public void closeSession() {
+    public void close() {
 
         if (!isConnected()) {
             return;
@@ -168,7 +164,7 @@ class CIMConnectorManager {
             socketChannel.close();
         } catch (IOException ignore) {
         } finally {
-            this.sessionClosed();
+            this.onSessionClosed();
         }
     }
 
@@ -176,6 +172,9 @@ class CIMConnectorManager {
         return socketChannel != null && socketChannel.isConnected();
     }
 
+    public void sendHeartbeat() {
+        send(HeartbeatResponse.getInstance());
+    }
 
     public void send(final Protobufable body) {
 
@@ -197,9 +196,9 @@ class CIMConnectorManager {
             } finally {
 
                 if (result <= 0) {
-                    closeSession();
+                    close();
                 } else {
-                    messageSent(body);
+                    onMessageSent(body);
                 }
             }
         });
@@ -207,7 +206,7 @@ class CIMConnectorManager {
     }
 
 
-    private void sessionCreated() {
+    private void onSessionCreated() {
         LOGGER.sessionCreated(socketChannel);
 
         Intent intent = new Intent();
@@ -217,7 +216,7 @@ class CIMConnectorManager {
 
     }
 
-    private void sessionClosed() {
+    private void onSessionClosed() {
 
         idleHandler.removeMessages(0);
 
@@ -230,15 +229,15 @@ class CIMConnectorManager {
 
     }
 
-    private void sessionIdle() {
+    private void onSessionIdle() {
 
         LOGGER.sessionIdle(socketChannel);
 
-        closeSession();
+        close();
     }
 
 
-    private void messageReceived(Object obj) {
+    private void onMessageReceived(Object obj) {
 
         if (obj instanceof Message) {
 
@@ -260,7 +259,7 @@ class CIMConnectorManager {
     }
 
 
-    private void messageSent(Object message) {
+    private void onMessageSent(Object message) {
 
         LOGGER.messageSent(socketChannel, message);
 
@@ -276,12 +275,12 @@ class CIMConnectorManager {
     private final Handler idleHandler = new Handler(IDLE_HANDLER_THREAD.getLooper()) {
         @Override
         public void handleMessage(android.os.Message m) {
-            sessionIdle();
+            onSessionIdle();
         }
     };
 
     private void handleDisconnectedEvent() {
-        closeSession();
+        close();
     }
 
     private void handleConnectAbortedEvent() {
@@ -302,7 +301,7 @@ class CIMConnectorManager {
 
         closeCountDown();
 
-        sessionCreated();
+        onSessionCreated();
 
     }
 
@@ -319,7 +318,7 @@ class CIMConnectorManager {
             return;
         }
 
-        this.messageReceived(message);
+        this.onMessageReceived(message);
 
     }
 
