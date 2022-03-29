@@ -12,7 +12,7 @@ CIM是基于mina或者netty框架下的推送系统，我们平常使用第三�
 
 
 <div align="center">
-   <img src="https://images.gitee.com/uploads/images/2020/0322/202115_0a14734c_58912.jpeg" width="280px"  />
+   <img src="http://staticres.oss-cn-hangzhou.aliyuncs.com/hoxin/single_chatting_dark.jpg" width="280px"  />
    <img src="https://images.gitee.com/uploads/images/2020/0322/202140_f08c16ce_58912.jpeg" width="280px" />
    <img src="https://images.gitee.com/uploads/images/2020/0302/161713_966e177b_58912.jpeg" width="280px" />
 </div>
