@@ -52,6 +52,10 @@ public class CIMPushManager {
 
     protected static final String ACTION_SET_LOGGER_EATABLE = "ACTION_SET_LOGGER_EATABLE";
 
+    protected static final String ACTION_SHOW_PERSIST_NOTIFICATION = "ACTION_SHOW_PERSIST_NOTIFICATION";
+
+    protected static final String ACTION_HIDE_PERSIST_NOTIFICATION = "ACTION_HIDE_PERSIST_NOTIFICATION";
+
     protected static final String KEY_SEND_BODY = "KEY_SEND_BODY";
 
     /**
@@ -87,6 +91,20 @@ public class CIMPushManager {
         startService(context, serviceIntent);
     }
 
+    public static void startForeground(Context context,int icon, String channel , String message) {
+        Intent serviceIntent = new Intent(context, CIMPushService.class);
+        serviceIntent.putExtra(CIMPushService.KEY_NOTIFICATION_MESSAGE, message);
+        serviceIntent.putExtra(CIMPushService.KEY_NOTIFICATION_CHANNEL, channel);
+        serviceIntent.putExtra(CIMPushService.KEY_NOTIFICATION_ICON, icon);
+        serviceIntent.setAction(ACTION_SHOW_PERSIST_NOTIFICATION);
+        startService(context, serviceIntent);
+    }
+
+    public static void cancelForeground(Context context) {
+        Intent serviceIntent = new Intent(context, CIMPushService.class);
+        serviceIntent.setAction(ACTION_HIDE_PERSIST_NOTIFICATION);
+        startService(context, serviceIntent);
+    }
 
     /**
      * 设置一个账号登录到服务端
