@@ -45,11 +45,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class CIMPushService extends Service {
 
-    public final static String KEY_DELAYED_TIME = "KEY_DELAYED_TIME";
-    public final static String KEY_LOGGER_ENABLE = "KEY_LOGGER_ENABLE";
-    public final static String KEY_NOTIFICATION_MESSAGE = "KEY_NOTIFICATION_MESSAGE";
-    public final static String KEY_NOTIFICATION_CHANNEL = "KEY_NOTIFICATION_CHANNEL";
-    public final static String KEY_NOTIFICATION_ICON = "KEY_NOTIFICATION_ICON";
+    static final String KEY_SEND_BODY = "KEY_SEND_BODY";
+    static final String KEY_DELAYED_TIME = "KEY_DELAYED_TIME";
+    static final String KEY_LOGGER_ENABLE = "KEY_LOGGER_ENABLE";
+    static final String KEY_NOTIFICATION_MESSAGE = "KEY_NOTIFICATION_MESSAGE";
+    static final String KEY_NOTIFICATION_CHANNEL = "KEY_NOTIFICATION_CHANNEL";
+    static final String KEY_NOTIFICATION_ICON = "KEY_NOTIFICATION_ICON";
 
     private final  static String TRANSIENT_NTC_CHANNEL_ID = "CIM_PUSH_TRANSIENT_NTC_ID";
     private final  static String PERSIST_NTC_CHANNEL_ID = "CIM_PUSH_PERSIST_NTC_ID";
@@ -134,7 +135,7 @@ public class CIMPushService extends Service {
         }
 
         if (CIMPushManager.ACTION_SEND_REQUEST_BODY.equals(action)) {
-            connectorManager.send((SentBody) intent.getSerializableExtra(CIMPushManager.KEY_SEND_BODY));
+            connectorManager.send((SentBody) intent.getSerializableExtra(KEY_SEND_BODY));
         }
 
         if (CIMPushManager.ACTION_CLOSE_CIM_CONNECTION.equals(action)) {

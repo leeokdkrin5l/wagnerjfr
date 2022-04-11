@@ -56,8 +56,6 @@ public class CIMPushManager {
 
     protected static final String ACTION_HIDE_PERSIST_NOTIFICATION = "ACTION_HIDE_PERSIST_NOTIFICATION";
 
-    protected static final String KEY_SEND_BODY = "KEY_SEND_BODY";
-
     /**
      * 初始化,连接服务端，在程序启动页或者 在Application里调用
      */
@@ -160,7 +158,7 @@ public class CIMPushManager {
         }
 
         Intent serviceIntent = new Intent(context, CIMPushService.class);
-        serviceIntent.putExtra(KEY_SEND_BODY, body);
+        serviceIntent.putExtra(CIMPushService.KEY_SEND_BODY, body);
         serviceIntent.setAction(ACTION_SEND_REQUEST_BODY);
         startService(context, serviceIntent);
 
