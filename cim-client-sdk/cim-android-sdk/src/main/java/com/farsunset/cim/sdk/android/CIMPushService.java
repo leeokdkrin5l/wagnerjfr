@@ -270,6 +270,7 @@ public class CIMPushService extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && notificationManager.getNotificationChannel(PERSIST_NTC_CHANNEL_ID) == null) {
             NotificationChannel channel = new NotificationChannel(PERSIST_NTC_CHANNEL_ID,channelName, NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(false);
+            channel.setShowBadge(false);
             channel.enableVibration(false);
             channel.setSound(null, null);
             notificationManager.createNotificationChannel(channel);
