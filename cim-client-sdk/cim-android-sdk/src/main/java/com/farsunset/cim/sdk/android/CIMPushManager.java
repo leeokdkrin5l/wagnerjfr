@@ -56,6 +56,8 @@ public class CIMPushManager {
 
     protected static final String ACTION_HIDE_PERSIST_NOTIFICATION = "ACTION_HIDE_PERSIST_NOTIFICATION";
 
+    protected static final String ACTION_SEND_PONG = "ACTION_SEND_PONG";
+
     /**
      * 初始化,连接服务端，在程序启动页或者 在Application里调用
      */
@@ -115,6 +117,12 @@ public class CIMPushManager {
 
         sendBindRequest(context, account);
 
+    }
+
+    public static void pong(Context context) {
+        Intent serviceIntent = new Intent(context, CIMPushService.class);
+        serviceIntent.setAction(ACTION_SEND_PONG);
+        startService(context, serviceIntent);
     }
 
     private static void sendBindRequest(Context context, String account) {
@@ -256,7 +264,7 @@ public class CIMPushManager {
             return currDeviceId;
         }
 
-        String deviceId = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
+        String deviceId = UUID.randomUUID().toString().replace("-", "").toUpperCase();
 
         CIMCacheManager.putString(context, CIMCacheManager.KEY_DEVICE_ID, deviceId);
 

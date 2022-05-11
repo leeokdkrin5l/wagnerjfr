@@ -34,6 +34,7 @@ import android.os.IBinder;
 import android.util.Log;
 import com.farsunset.cim.sdk.android.constant.CIMConstant;
 import com.farsunset.cim.sdk.android.logger.CIMLogger;
+import com.farsunset.cim.sdk.android.model.Pong;
 import com.farsunset.cim.sdk.android.model.SentBody;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -144,6 +145,10 @@ public class CIMPushService extends Service {
 
         if (CIMPushManager.ACTION_ACTIVATE_PUSH_SERVICE.equals(action)) {
             handleKeepAlive();
+        }
+
+        if (CIMPushManager.ACTION_SEND_PONG.equals(action)) {
+            connectorManager.send(Pong.getInstance());
         }
 
         if (CIMPushManager.ACTION_SET_LOGGER_EATABLE.equals(action)) {
