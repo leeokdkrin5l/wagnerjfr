@@ -40,15 +40,16 @@ import java.util.UUID;
  */
 public class CIMPushManager {
 
-    protected static final String ACTION_ACTIVATE_PUSH_SERVICE = "ACTION_ACTIVATE_PUSH_SERVICE";
 
     protected static final String ACTION_CREATE_CIM_CONNECTION = "ACTION_CREATE_CIM_CONNECTION";
+
+    protected static final String ACTION_DESTROY_CIM_SERVICE = "ACTION_DESTROY_CIM_SERVICE";
+
+    protected static final String ACTION_ACTIVATE_PUSH_SERVICE = "ACTION_ACTIVATE_PUSH_SERVICE";
 
     protected static final String ACTION_SEND_REQUEST_BODY = "ACTION_SEND_REQUEST_BODY";
 
     protected static final String ACTION_CLOSE_CIM_CONNECTION = "ACTION_CLOSE_CIM_CONNECTION";
-
-    protected static final String ACTION_DESTROY_CIM_SERVICE = "ACTION_DESTROY_CIM_SERVICE";
 
     protected static final String ACTION_SET_LOGGER_EATABLE = "ACTION_SET_LOGGER_EATABLE";
 
@@ -56,7 +57,7 @@ public class CIMPushManager {
 
     protected static final String ACTION_HIDE_PERSIST_NOTIFICATION = "ACTION_HIDE_PERSIST_NOTIFICATION";
 
-    protected static final String ACTION_SEND_PONG = "ACTION_SEND_PONG";
+    protected static final String ACTION_CIM_CONNECTION_PONG = "ACTION_CIM_CONNECTION_PONG";
 
     /**
      * 初始化,连接服务端，在程序启动页或者 在Application里调用
@@ -120,9 +121,10 @@ public class CIMPushManager {
     }
 
     public static void pong(Context context) {
-        Intent serviceIntent = new Intent(context, CIMPushService.class);
-        serviceIntent.setAction(ACTION_SEND_PONG);
-        startService(context, serviceIntent);
+        if (isDestroyed(context) || isStopped(context)) {
+            return;
+        }
+        context.sendBroadcast(new Intent(ACTION_CIM_CONNECTION_PONG));
     }
 
     private static void sendBindRequest(Context context, String account) {

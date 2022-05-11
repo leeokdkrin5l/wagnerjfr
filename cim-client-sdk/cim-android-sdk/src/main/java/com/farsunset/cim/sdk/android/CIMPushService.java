@@ -53,15 +53,16 @@ public class CIMPushService extends Service {
     static final String KEY_NOTIFICATION_CHANNEL = "KEY_NOTIFICATION_CHANNEL";
     static final String KEY_NOTIFICATION_ICON = "KEY_NOTIFICATION_ICON";
 
-    private final  static String TRANSIENT_NTC_CHANNEL_ID = "CIM_PUSH_TRANSIENT_NTC_ID";
-    private final  static String PERSIST_NTC_CHANNEL_ID = "CIM_PUSH_PERSIST_NTC_ID";
+    private static final String TRANSIENT_NTC_CHANNEL_ID = "CIM_PUSH_TRANSIENT_NTC_ID";
+    private static final String PERSIST_NTC_CHANNEL_ID = "CIM_PUSH_PERSIST_NTC_ID";
 
-    private final static int NOTIFICATION_ID = Integer.MAX_VALUE;
+    private static final int NOTIFICATION_ID = Integer.MAX_VALUE;
 
-    private final static int PERSIST_NOTIFICATION_ID = Integer.MIN_VALUE;
+    private static final int PERSIST_NOTIFICATION_ID = Integer.MIN_VALUE;
 
     private CIMConnectorManager connectorManager;
     private KeepAliveBroadcastReceiver keepAliveReceiver;
+    private InnerEventBroadcastReceiver innerEventReceiver;
     private ConnectivityManager connectivityManager;
     private NotificationManager notificationManager;
     private final AtomicBoolean persistHolder = new AtomicBoolean(false);
@@ -71,8 +72,11 @@ public class CIMPushService extends Service {
     public void onCreate() {
         connectorManager = CIMConnectorManager.getManager(this.getApplicationContext());
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
+        innerEventReceiver = new InnerEventBroadcastReceiver();
+        registerReceiver(innerEventReceiver, innerEventReceiver.getIntentFilter());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             keepAliveReceiver = new KeepAliveBroadcastReceiver();
             registerReceiver(keepAliveReceiver, keepAliveReceiver.getIntentFilter());
         }
@@ -147,18 +151,14 @@ public class CIMPushService extends Service {
             handleKeepAlive();
         }
 
-        if (CIMPushManager.ACTION_SEND_PONG.equals(action)) {
-            connectorManager.send(Pong.getInstance());
+        if (CIMPushManager.ACTION_DESTROY_CIM_SERVICE.equals(action)) {
+            connectorManager.close();
+            this.stopSelf();
         }
 
         if (CIMPushManager.ACTION_SET_LOGGER_EATABLE.equals(action)) {
             boolean enable = intent.getBooleanExtra(KEY_LOGGER_ENABLE, true);
             CIMLogger.getLogger().debugMode(enable);
-        }
-
-        if (CIMPushManager.ACTION_DESTROY_CIM_SERVICE.equals(action)) {
-            connectorManager.close();
-            this.stopSelf();
         }
 
         if (CIMPushManager.ACTION_SHOW_PERSIST_NOTIFICATION.equals(action)) {
@@ -239,6 +239,9 @@ public class CIMPushService extends Service {
 
         persistHolder.set(false);
 
+        unregisterReceiver(innerEventReceiver);
+
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             unregisterReceiver(keepAliveReceiver);
         }
@@ -315,6 +318,21 @@ public class CIMPushService extends Service {
             intentFilter.addAction(Intent.ACTION_POWER_CONNECTED);
             intentFilter.addAction(Intent.ACTION_POWER_DISCONNECTED);
             intentFilter.addAction(Intent.ACTION_USER_PRESENT);
+            return intentFilter;
+        }
+
+    }
+
+    private class InnerEventBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            connectorManager.send(Pong.getInstance());
+        }
+
+        public IntentFilter getIntentFilter() {
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(CIMPushManager.ACTION_CIM_CONNECTION_PONG);
             return intentFilter;
         }
 
