@@ -124,7 +124,10 @@ public class CIMPushManager {
         if (isDestroyed(context) || isStopped(context)) {
             return;
         }
-        context.sendBroadcast(new Intent(ACTION_CIM_CONNECTION_PONG));
+
+        Intent serviceIntent = new Intent(context, CIMPushService.class);
+        serviceIntent.setAction(ACTION_CIM_CONNECTION_PONG);
+        startService(context, serviceIntent);
     }
 
     private static void sendBindRequest(Context context, String account) {

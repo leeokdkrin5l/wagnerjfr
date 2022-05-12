@@ -62,7 +62,6 @@ public class CIMPushService extends Service {
 
     private CIMConnectorManager connectorManager;
     private KeepAliveBroadcastReceiver keepAliveReceiver;
-    private InnerEventBroadcastReceiver innerEventReceiver;
     private ConnectivityManager connectivityManager;
     private NotificationManager notificationManager;
     private final AtomicBoolean persistHolder = new AtomicBoolean(false);
@@ -72,9 +71,6 @@ public class CIMPushService extends Service {
     public void onCreate() {
         connectorManager = CIMConnectorManager.getManager(this.getApplicationContext());
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        innerEventReceiver = new InnerEventBroadcastReceiver();
-        registerReceiver(innerEventReceiver, innerEventReceiver.getIntentFilter());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             keepAliveReceiver = new KeepAliveBroadcastReceiver();
@@ -154,6 +150,10 @@ public class CIMPushService extends Service {
         if (CIMPushManager.ACTION_DESTROY_CIM_SERVICE.equals(action)) {
             connectorManager.close();
             this.stopSelf();
+        }
+
+        if (CIMPushManager.ACTION_CIM_CONNECTION_PONG.equals(action)) {
+            connectorManager.send(Pong.getInstance());
         }
 
         if (CIMPushManager.ACTION_SET_LOGGER_EATABLE.equals(action)) {
@@ -239,9 +239,6 @@ public class CIMPushService extends Service {
 
         persistHolder.set(false);
 
-        unregisterReceiver(innerEventReceiver);
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             unregisterReceiver(keepAliveReceiver);
         }
@@ -322,20 +319,4 @@ public class CIMPushService extends Service {
         }
 
     }
-
-    private class InnerEventBroadcastReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            connectorManager.send(Pong.getInstance());
-        }
-
-        public IntentFilter getIntentFilter() {
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(CIMPushManager.ACTION_CIM_CONNECTION_PONG);
-            return intentFilter;
-        }
-
-    }
-
 }
