@@ -8,10 +8,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bed47126-03b3-4370-a6c1-08503492974f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.ipr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.iws" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component/handler/ClosedHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component/handler/ClosedHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/group/SessionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/group/SessionGroup.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -149,6 +145,7 @@
       <workItem from="1621948445182" duration="764000" />
       <workItem from="1621956423905" duration="116000" />
       <workItem from="1622640308758" duration="60000" />
+      <workItem from="1623163801922" duration="23000" />
     </task>
     <servers />
   </component>
