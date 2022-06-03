@@ -9,10 +9,15 @@
   <component name="ChangeListManager">
     <list default="true" id="bed47126-03b3-4370-a6c1-08503492974f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/cim-boot-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.ipr" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cim-boot-server.iws" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component/handler/ClosedHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component/handler/ClosedHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/group/SessionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/group/SessionGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/cim-server-sdk-netty-4.0.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component/handler/BindHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component/handler/BindHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/entity/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/entity/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/i18n/messages.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/i18n/messages.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/page/console/session/manage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/page/console/session/manage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/common.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/common.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/cim/cim.web.sdk.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/cim/cim.web.sdk.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/constant/ChannelAttr.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/constant/ChannelAttr.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +86,9 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/farsunset/cim/component" />
       <recent name="$PROJECT_DIR$/src/main/java/com/farsunset/cim/handler" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/libs" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.farsunset.cim.config" />
       <recent name="com.farsunset.cim.mvc.controller.admin" />
@@ -90,6 +98,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="BootApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="cim-boot-server" />
       <extension name="coverage">
@@ -149,11 +168,23 @@
       <workItem from="1621948445182" duration="764000" />
       <workItem from="1621956423905" duration="116000" />
       <workItem from="1622640308758" duration="60000" />
+      <workItem from="1623930030165" duration="975000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
