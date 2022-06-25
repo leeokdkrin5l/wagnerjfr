@@ -1,7 +1,7 @@
 
-## [cim在线文档](https://www.yuque.com/yuanfangxiyang/ma4ytb)
+## 1、[在线文档](https://www.yuque.com/yuanfangxiyang/ma4ytb)
 
-## [产品官网](http://farsunset.com)
+## 2、[产品官网](http://farsunset.com)
 
 ---
 
@@ -20,7 +20,7 @@ CIM采用业内主流开源技术构建，易于扩展和使用，并完美支�
 
    
 ---
-## [产品官网](http://farsunset.com)
+## [收费产品介绍](http://farsunset.com)
 
 #### 和信
 和信是基于CIM组件开发的一整套完整的产品,面向所有人开放注册的试用场景。具有丰富的功能，聊天、群组、好友列表、黑名单、公众号、朋友圈等功能。不依赖任何第三方服务，可以私有化部署。
