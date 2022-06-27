@@ -4,149 +4,66 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bed47126-03b3-4370-a6c1-08503492974f" name="Default Changelist" comment="">
-<<<<<<< HEAD
-      <change beforePath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/group/SessionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cim-server-sdk/src/main/java/com/farsunset/cim/sdk/server/group/SessionGroup.java" afterDir="false" />
-=======
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/config/properties/APNsProperties.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/config/properties/CIMProperties.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.ipr" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cim-boot-server.iws" beforeDir="false" afterPath="$PROJECT_DIR$/cim-boot-server.iws" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/BootApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/BootApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/config/CIMConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/config/CIMConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/service/impl/APNsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/farsunset/cim/service/impl/APNsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
->>>>>>> bcb7a59ef440a21ae7f3d7778e84f49e971e162f
+    <list default="true" id="76444805-771d-4ba6-8c14-1f699154c26c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/cim-boot-server.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cim-boot-server.ipr" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cim-boot-server.iws" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
-  </component>
-  <component name="ProjectId" id="1vwGZ8Dv1qMn07dI9m3HkVqLJcd" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RequestMappingsPanelOrder0" value="0" />
-    <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="75" />
-    <property name="RequestMappingsPanelWidth1" value="75" />
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.annotationProcessors" />
-  </component>
-  <component name="ReactorSettings">
-    <option name="notificationShown" value="true" />
-  </component>
   <component name="RunManager">
-    <configuration name="BootApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BootApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="cim-boot-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.farsunset.cim.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.farsunset.cim.BootApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.BootApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <created>1627465791411</created>
+      <changelist id="76444805-771d-4ba6-8c14-1f699154c26c" name="Default Changelist" comment="" />
+      <created>1632398352014</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-<<<<<<< HEAD
-      <updated>1557734989980</updated>
-      <workItem from="1557734991214" duration="96000" />
-      <workItem from="1557735150926" duration="502000" />
-      <workItem from="1557738240090" duration="289000" />
-      <workItem from="1557740865016" duration="686000" />
-      <workItem from="1558432010952" duration="352000" />
-      <workItem from="1558596242648" duration="1398000" />
-      <workItem from="1559009816995" duration="1293000" />
-      <workItem from="1559110709907" duration="1801000" />
-      <workItem from="1559198165156" duration="1213000" />
-      <workItem from="1559269742769" duration="598000" />
-      <workItem from="1562899329294" duration="2642000" />
-      <workItem from="1563179336728" duration="715000" />
-      <workItem from="1563191907066" duration="17000" />
-      <workItem from="1563245165817" duration="382000" />
-      <workItem from="1566816214034" duration="698000" />
-      <workItem from="1567410257659" duration="115000" />
-      <workItem from="1568597528002" duration="523000" />
-      <workItem from="1579076046499" duration="14355000" />
-      <workItem from="1579226829168" duration="8852000" />
-      <workItem from="1583472574255" duration="526000" />
-      <workItem from="1583473153031" duration="15009000" />
-      <workItem from="1618489559220" duration="4137000" />
-      <workItem from="1619013470791" duration="41000" />
-      <workItem from="1619014134954" duration="548000" />
-      <workItem from="1619185841584" duration="14228000" />
-      <workItem from="1619619256370" duration="6445000" />
-      <workItem from="1621948445182" duration="764000" />
-      <workItem from="1621956423905" duration="116000" />
-      <workItem from="1622640308758" duration="60000" />
-      <workItem from="1623163801922" duration="23000" />
-=======
-      <updated>1627465791411</updated>
-      <workItem from="1627465794654" duration="349000" />
-      <workItem from="1627466201558" duration="208000" />
-      <workItem from="1627466418029" duration="385000" />
-      <workItem from="1627466811924" duration="208000" />
-      <workItem from="1627467028377" duration="54000" />
-      <workItem from="1627467091404" duration="120000" />
-      <workItem from="1627467220173" duration="16000" />
-      <workItem from="1627467243985" duration="40000" />
-      <workItem from="1627467292126" duration="21000" />
-      <workItem from="1627467321088" duration="57000" />
-      <workItem from="1627467385404" duration="49000" />
-      <workItem from="1627467441539" duration="34000" />
-      <workItem from="1627467484204" duration="15000" />
-      <workItem from="1627467507955" duration="492000" />
->>>>>>> bcb7a59ef440a21ae7f3d7778e84f49e971e162f
+      <updated>1632398352014</updated>
+      <workItem from="1632398355222" duration="104000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/farsunset/cim/service/impl/APNsServiceImpl.java</url>
-          <line>49</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/cim_boot_server$BootApplication.ic" NAME="BootApplication Coverage Results" MODIFIED="1627466289207" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
