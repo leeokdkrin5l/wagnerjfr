@@ -1,0 +1,6 @@
+framework module cimsdk {
+  umbrella header "cimsdk-umbrella.h"
+
+  export *
+  module * { export * }
+}
