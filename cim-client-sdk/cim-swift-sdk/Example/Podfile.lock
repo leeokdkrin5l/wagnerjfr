@@ -1,0 +1,27 @@
+PODS:
+  - cimsdk (0.1.0):
+    - Starscream (~> 4.0.0)
+    - SwiftProtobuf (~> 1.0)
+  - Starscream (4.0.4)
+  - SwiftProtobuf (1.17.0)
+
+DEPENDENCIES:
+  - cimsdk (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - Starscream
+    - SwiftProtobuf
+
+EXTERNAL SOURCES:
+  cimsdk:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  cimsdk: b47490e772cd2be7616f3c5a426ac2ac8e671a6a
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  SwiftProtobuf: 9c85136c6ba74b0a1b84279dbf0f6db8efb714e0
+
+PODFILE CHECKSUM: 9553001a2a8e262563768c3daaccec410de16fe8
+
+COCOAPODS: 1.10.1
