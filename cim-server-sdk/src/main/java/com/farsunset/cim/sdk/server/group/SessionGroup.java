@@ -76,6 +76,10 @@ public class SessionGroup extends ConcurrentHashMap<String, Collection<Channel>>
         find(key).stream().filter(matcher).forEach(channel -> channel.writeAndFlush(message));
     }
 
+    public void write(String key, Message message, Collection<String> excludedSet){
+        find(key).stream().filter(channel -> excludedSet == null || !excludedSet.contains(channel.attr(ChannelAttr.UID).get())).forEach(channel -> channel.writeAndFlush(message));
+    }
+
     public void write(Message message){
         this.write(message.getReceiver(),message);
     }
