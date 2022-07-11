@@ -1,29 +1,18 @@
-# cimsdk
+#  Demo
 
-[![CI Status](https://img.shields.io/travis/飞鱼/cimsdk.svg?style=flat)](https://travis-ci.org/飞鱼/cimsdk)
-[![Version](https://img.shields.io/cocoapods/v/cimsdk.svg?style=flat)](https://cocoapods.org/pods/cimsdk)
-[![License](https://img.shields.io/cocoapods/l/cimsdk.svg?style=flat)](https://cocoapods.org/pods/cimsdk)
-[![Platform](https://img.shields.io/cocoapods/p/cimsdk.svg?style=flat)](https://cocoapods.org/pods/cimsdk)
 
-## Example
+## macOS Demo [参考教程](https://www.bilibili.com/video/BV1U5411E77K)
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+![Demo](./screenshot/macOS.png)
 
-## Requirements
 
-## Installation
 
-cimsdk is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+## 变更记录
 
-```ruby
-pod 'cimsdk'
-```
+### v2.0
+* 弃用cocoapods, 支持SPM
+* SwiftUI Hello world!
 
-## Author
-
-飞鱼, 870027381@qq.com
-
-## License
-
-cimsdk is available under the MIT license. See the LICENSE file for more info.
+### v1.0
+* 支持cocoapods
+* 实现消息收发
