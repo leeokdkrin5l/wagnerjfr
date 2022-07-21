@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "0Yi79qmwre4UmWBoQKgRxXGDZLg9pGIebCuu+93E0q2gBmjEeCYjaeom7TowPRX8AX/6aEE/b3+RE/TWTsiung==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\smeb\\Desktop\\电小牛V2\\CIM_SDK\\CIM_SDK_Tests\\CIM_SDK_Tests.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\smeb\\.nuget\\packages\\google.protobuf\\3.19.1\\google.protobuf.3.19.1.nupkg.sha512",
+    "C:\\Users\\smeb\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
+    "C:\\Users\\smeb\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.2\\system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
+  ],
+  "logs": []
+}
