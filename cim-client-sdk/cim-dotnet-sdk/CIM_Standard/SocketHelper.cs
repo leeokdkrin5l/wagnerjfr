@@ -33,9 +33,7 @@ namespace CIM_Standard
 
         public const string APP_PACKAGE = "com.farsunset.cim";
 
-        public static bool LoginState = false;
-
-        public async static Task CIMConnect(string host,int port,Action action) 
+        public async static Task CIMConnect(string host,int port,Action<MessageModel> action) 
         {
 
             try
@@ -48,14 +46,16 @@ namespace CIM_Standard
                     Thread.Sleep(1000);
                     if (client.Connected)
                     {
-                        LoginState = true;
                         Console.WriteLine("-------------------开始登录-------------");
                         await SendLoginMessage();
                         break;
                     }
                 }
 
-                await Task.Run(new Action(action));//开启线程，不停接收消息
+                await Task.Run(()=> 
+                {
+                    ReceiveMessage(action);
+                });
 
             } 
             catch (Exception ex) 
@@ -124,6 +124,42 @@ namespace CIM_Standard
             return header;
         }
 
-       
+        public static void ReceiveMessage(Action<MessageModel> action)
+        {
+            NetworkStream networkStream = client.GetStream();
+            while (true)
+            {
+                byte[] buffer = new byte[3];
+                networkStream.Read(buffer, 0, buffer.Length);
+                int l = (buffer[1] & 0xff);
+                int h = (buffer[2] & 0xff);
+                int length = (l | h << 8);
+                if (buffer[0] == PING_TYPE)
+                {
+                    byte[] msg = new byte[length];
+                    networkStream.Read(msg, 0, msg.Length);
+                    Pong().Wait();
+                }
+                else if (buffer[0] == REPLY_BODY)
+                {
+                    byte[] msg = new byte[length];
+                    networkStream.Read(msg, 0, msg.Length);
+                    ReplyBodyModel model = new ReplyBodyModel();
+                    model.MergeFrom(msg);
+                    if (model.Key.Equals("client_bind")) 
+                    {
+                        Console.WriteLine("绑定账户成功!");
+                    }
+                }
+                else if (buffer[0] == MESSAGE_TYPE)
+                {
+                    byte[] msg = new byte[length];
+                    networkStream.Read(msg, 0, msg.Length);
+                    MessageModel model = new MessageModel();
+                    model.MergeFrom(msg);
+                    action(model);
+                }
+            }
+        }
     }
 }
