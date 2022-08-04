@@ -41,9 +41,9 @@ CIM采用业内主流开源技术构建，易于扩展和使用，并完美支�
 ---
 ## [相关开源项目]
 
-#### WEB聊天室
+#### [WEB聊天室](https://gitee.com/farsunset/chat-room-server)
 该项目是完全开源基于cim开发的一款web匿名聊天室，支持发送表情、图片、文字聊天，供学习使用
-[项目地址](https://gitee.com/farsunset/chat-room-server)
+
 <div align="center">
    <img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/chat-room/chat_window.png" width="45%"  />
    <img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/chat-room/room_members.png" width="45%"  />
