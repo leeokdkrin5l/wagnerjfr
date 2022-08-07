@@ -1,6 +1,7 @@
 package com.farsunset.cim.config;
 
 import com.farsunset.cim.component.handler.annotation.CIMHandler;
+import com.farsunset.cim.component.predicate.HandshakePredicate;
 import com.farsunset.cim.config.properties.CIMProperties;
 import com.farsunset.cim.sdk.server.group.SessionGroup;
 import com.farsunset.cim.sdk.server.group.TagSessionGroup;
@@ -43,11 +44,12 @@ public class CIMConfig implements CIMRequestHandler, ApplicationListener<Applica
 
 
 	@Bean(destroyMethod = "destroy")
-	public CIMNioSocketAcceptor getNioSocketAcceptor(CIMProperties properties) {
+	public CIMNioSocketAcceptor getNioSocketAcceptor(CIMProperties properties, HandshakePredicate handshakePredicate) {
 
 		return new CIMNioSocketAcceptor.Builder()
 				.setAppPort(properties.getAppPort())
 				.setWebsocketPort(properties.getWebsocketPort())
+				.setHandshakePredicate(handshakePredicate)
 				.setOuterRequestHandler(this)
 				.build();
 
