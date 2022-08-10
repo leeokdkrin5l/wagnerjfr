@@ -38,16 +38,20 @@ import java.util.function.Predicate;
 @ChannelHandler.Sharable
 public class HandshakeHandler extends ChannelInboundHandlerAdapter {
 
-    private final Predicate<HandshakeEvent> handshakePredicate;
+    /*
+    客户端接收到的CloseEvent事件类型
+    客户端可通过该code判断是握手鉴权失败
+     */
+    private static final int UNAUTHORIZED_CODE = 4001;
 
-    private final WebSocketCloseStatus closeStatus = new WebSocketCloseStatus(HttpResponseStatus.UNAUTHORIZED.code(),HttpResponseStatus.UNAUTHORIZED.reasonPhrase());
+    private final Predicate<HandshakeEvent> handshakePredicate;
 
     public HandshakeHandler(Predicate<HandshakeEvent> handshakePredicate) {
         this.handshakePredicate = handshakePredicate;
     }
 
     @Override
-     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
 
         super.userEventTriggered(ctx, evt);
 
@@ -67,7 +71,7 @@ public class HandshakeHandler extends ChannelInboundHandlerAdapter {
          * 鉴权不通过，关闭链接
          */
         if (!handshakePredicate.test(HandshakeEvent.of(event))) {
-            context.channel().writeAndFlush(new CloseWebSocketFrame(closeStatus)).addListener(ChannelFutureListener.CLOSE);
+            context.channel().writeAndFlush(new CloseWebSocketFrame(UNAUTHORIZED_CODE,HttpResponseStatus.UNAUTHORIZED.reasonPhrase())).addListener(ChannelFutureListener.CLOSE);
         }
     }
 }

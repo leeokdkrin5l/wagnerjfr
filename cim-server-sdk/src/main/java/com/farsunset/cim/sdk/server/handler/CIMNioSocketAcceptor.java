@@ -58,7 +58,7 @@ import java.util.function.Predicate;
 public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 	private static final Logger LOGGER = LoggerFactory.getLogger(CIMNioSocketAcceptor.class);
 
-    private static final int PONG_TIME_OUT_COUNT = 3;
+	private static final int PONG_TIME_OUT_COUNT = 3;
 	private final ThreadFactory bossThreadFactory;
 	private final ThreadFactory workerThreadFactory;
 
@@ -70,6 +70,7 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 
 	private final Integer appPort;
 	private final Integer webPort;
+	private final String websocketPath;
 	private final CIMRequestHandler outerRequestHandler;
 	private final HandshakeHandler handshakeHandler;
 
@@ -90,6 +91,7 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 		this.appPort = builder.appPort;
 		this.outerRequestHandler = builder.outerRequestHandler;
 		this.handshakeHandler = new HandshakeHandler(builder.handshakePredicate);
+		this.websocketPath = builder.websocketPath == null ? "/" : builder.websocketPath;
 
 		bossThreadFactory = r -> {
 			Thread thread = new Thread(r);
@@ -145,8 +147,8 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 		}
 	}
 
-    public void destroy() {
-    	this.destroy(appBossGroup,appWorkerGroup);
+	public void destroy() {
+		this.destroy(appBossGroup,appWorkerGroup);
 		this.destroy(webBossGroup,webWorkerGroup);
 	}
 
@@ -189,7 +191,7 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 				ch.pipeline().addLast(new HttpServerCodec());
 				ch.pipeline().addLast(new ChunkedWriteHandler());
 				ch.pipeline().addLast(new HttpObjectAggregator(4 * 1024));
-				ch.pipeline().addLast(new WebSocketServerProtocolHandler("",false));
+				ch.pipeline().addLast(new WebSocketServerProtocolHandler(websocketPath,false));
 				ch.pipeline().addLast(handshakeHandler);
 				ch.pipeline().addLast(new WebMessageDecoder());
 				ch.pipeline().addLast(new WebMessageEncoder());
@@ -301,6 +303,7 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 
 		private Integer appPort;
 		private Integer webPort;
+		private String websocketPath;
 		private CIMRequestHandler outerRequestHandler;
 		private Predicate<HandshakeEvent> handshakePredicate;
 
@@ -311,6 +314,11 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 
 		public Builder setWebsocketPort(Integer port) {
 			this.webPort = port;
+			return this;
+		}
+
+		public Builder setWebsocketPath(String websocketPath) {
+			this.websocketPath = websocketPath;
 			return this;
 		}
 

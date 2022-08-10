@@ -141,6 +141,9 @@ CIM采用业内主流开源技术构建，易于扩展和使用，并完美支�
 版本:4.1.0/时间:2022-02-15
 
 1.websocket支持在握手时鉴权验证
-2.websocketPath 由 "/" 变更为 ""  wss和ws链接地址后面不需要加/
+
+https://www.yuque.com/yuanfangxiyang/ma4ytb/vvy3iz#mmdUX
+
+2.支持自定义配置websocketPath
 
  
