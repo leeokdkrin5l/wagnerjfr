@@ -191,7 +191,7 @@ public class CIMNioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 				ch.pipeline().addLast(new HttpServerCodec());
 				ch.pipeline().addLast(new ChunkedWriteHandler());
 				ch.pipeline().addLast(new HttpObjectAggregator(4 * 1024));
-				ch.pipeline().addLast(new WebSocketServerProtocolHandler(websocketPath,false));
+				ch.pipeline().addLast(new WebSocketServerProtocolHandler(websocketPath,true));
 				ch.pipeline().addLast(handshakeHandler);
 				ch.pipeline().addLast(new WebMessageDecoder());
 				ch.pipeline().addLast(new WebMessageEncoder());
