@@ -90,6 +90,7 @@ public class WebsocketAcceptor extends NioSocketAcceptor {
 
 			@Override
 			public void initChannel(SocketChannel ch){
+				ch.pipeline().addLast(threadNamingHandler);
 				ch.pipeline().addLast(new HttpServerCodec());
 				ch.pipeline().addLast(new ChunkedWriteHandler());
 				ch.pipeline().addLast(new HttpObjectAggregator(4 * 1024));

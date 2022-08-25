@@ -25,6 +25,7 @@ import com.farsunset.cim.constant.CIMConstant;
 import com.farsunset.cim.constant.ChannelAttr;
 import com.farsunset.cim.handler.CIMRequestHandler;
 import com.farsunset.cim.handler.LoggingHandler;
+import com.farsunset.cim.handler.ThreadNamingHandler;
 import com.farsunset.cim.model.Ping;
 import com.farsunset.cim.model.SentBody;
 import io.netty.bootstrap.ServerBootstrap;
@@ -48,6 +49,7 @@ abstract class NioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	protected final ChannelHandler loggingHandler = new LoggingHandler();
+	protected final ChannelHandler threadNamingHandler = new ThreadNamingHandler();
 
 	private final EventLoopGroup bossGroup;
 	private final EventLoopGroup workerGroup;
@@ -71,13 +73,13 @@ abstract class NioSocketAcceptor extends SimpleChannelInboundHandler<SentBody>{
 
 		ThreadFactory bossThreadFactory = r -> {
 			Thread thread = new Thread(r);
-			thread.setName("nio-boss-");
+			thread.setName("nio-boss-" + thread.getId());
 			return thread;
 		};
 
 		ThreadFactory workerThreadFactory = r -> {
 			Thread thread = new Thread(r);
-			thread.setName("nio-worker-");
+			thread.setName("nio-worker-" + thread.getId());
 			return thread;
 		};
 

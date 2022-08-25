@@ -35,6 +35,17 @@ public class LoggingHandler extends io.netty.handler.logging.LoggingHandler {
 	}
 
 	@Override
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		super.channelRead(ctx,msg);
+	}
+
+	@Override
+	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+		super.channelRead(ctx,msg);
+	}
+
+
+	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) {
 		ctx.fireChannelRegistered();
 	}
@@ -63,5 +74,4 @@ public class LoggingHandler extends io.netty.handler.logging.LoggingHandler {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		logger.warn("EXCEPTION",cause);
 	}
-
 }
