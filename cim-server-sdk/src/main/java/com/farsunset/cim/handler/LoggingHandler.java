@@ -22,6 +22,7 @@
 package com.farsunset.cim.handler;
 
 
+import com.farsunset.cim.constant.ChannelAttr;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
@@ -36,14 +37,43 @@ public class LoggingHandler extends io.netty.handler.logging.LoggingHandler {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		String name = Thread.currentThread().getName();
+		setThreadName(ctx);
 		super.channelRead(ctx,msg);
+		Thread.currentThread().setName(name);
 	}
 
 	@Override
 	public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
-		super.channelRead(ctx,msg);
+		String name = Thread.currentThread().getName();
+		setThreadName(ctx);
+		super.write(ctx,msg,promise);
+		Thread.currentThread().setName(name);
 	}
 
+	@Override
+	public void close(ChannelHandlerContext ctx, ChannelPromise promise) throws Exception {
+		String name = Thread.currentThread().getName();
+		setThreadName(ctx);
+		super.close(ctx,promise);
+		Thread.currentThread().setName(name);
+	}
+
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		String name = Thread.currentThread().getName();
+		setThreadName(ctx);
+		super.channelInactive(ctx);
+		Thread.currentThread().setName(name);
+	}
+
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		String name = Thread.currentThread().getName();
+		setThreadName(ctx);
+		super.userEventTriggered(ctx,evt);
+		Thread.currentThread().setName(name);
+	}
 
 	@Override
 	public void channelRegistered(ChannelHandlerContext ctx) {
@@ -74,4 +104,12 @@ public class LoggingHandler extends io.netty.handler.logging.LoggingHandler {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
 		logger.warn("EXCEPTION",cause);
 	}
+
+	private void setThreadName(ChannelHandlerContext context){
+		String uid = context.channel().attr(ChannelAttr.UID).get();
+		if (uid != null){
+			Thread.currentThread().setName("nio-uid-" + uid);
+		}
+	}
+
 }

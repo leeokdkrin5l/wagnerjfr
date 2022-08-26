@@ -59,7 +59,6 @@ public class AppSocketAcceptor extends NioSocketAcceptor {
 		bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 			@Override
 			public void initChannel(SocketChannel ch){
-				ch.pipeline().addLast(threadNamingHandler);
 				ch.pipeline().addLast(new AppMessageDecoder());
 				ch.pipeline().addLast(new AppMessageEncoder());
 				ch.pipeline().addLast(loggingHandler);
