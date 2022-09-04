@@ -102,7 +102,10 @@ public class LoggingHandler extends io.netty.handler.logging.LoggingHandler {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-		logger.warn("EXCEPTION",cause);
+		String name = Thread.currentThread().getName();
+		setThreadName(ctx);
+		logger.warn(this.format(ctx, "EXCEPTION", cause), cause);
+		Thread.currentThread().setName(name);
 	}
 
 	private void setThreadName(ChannelHandlerContext context){

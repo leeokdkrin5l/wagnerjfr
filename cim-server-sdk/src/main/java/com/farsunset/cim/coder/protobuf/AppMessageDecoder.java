@@ -23,6 +23,7 @@ package com.farsunset.cim.coder.protobuf;
 
 import com.farsunset.cim.constant.CIMConstant;
 import com.farsunset.cim.constant.ChannelAttr;
+import com.farsunset.cim.exception.ReadInvalidTypeException;
 import com.farsunset.cim.model.Pong;
 import com.farsunset.cim.model.SentBody;
 import com.farsunset.cim.model.proto.SentBodyProto;
@@ -65,28 +66,33 @@ public class AppMessageDecoder extends ByteToMessageDecoder {
 			return;
 		}
 		 
-		byte[] dataBytes = new byte[length];
-		buffer.readBytes(dataBytes);
+		byte[] content = new byte[length];
 
+		buffer.readBytes(content);
 
-		Object message = mappingMessageObject(dataBytes, type);
+		Object message = mappingMessageObject(content, type);
 		
 		queue.add(message);
 	}
 
-	public Object mappingMessageObject(byte[] data, byte type) throws com.google.protobuf.InvalidProtocolBufferException {
+	private Object mappingMessageObject(byte[] data, byte type) throws com.google.protobuf.InvalidProtocolBufferException {
 
 		if (CIMConstant.DATA_TYPE_PONG == type) {
 			return Pong.getInstance();
 		}
 
-		SentBodyProto.Model bodyProto = SentBodyProto.Model.parseFrom(data);
-		SentBody body = new SentBody();
-		body.setData(bodyProto.getDataMap());
-		body.setKey(bodyProto.getKey());
-		body.setTimestamp(bodyProto.getTimestamp());
+		if (CIMConstant.DATA_TYPE_SENT == type) {
 
-		return body;
+			SentBodyProto.Model bodyProto = SentBodyProto.Model.parseFrom(data);
+			SentBody body = new SentBody();
+			body.setData(bodyProto.getDataMap());
+			body.setKey(bodyProto.getKey());
+			body.setTimestamp(bodyProto.getTimestamp());
+
+			return body;
+		}
+
+		throw new ReadInvalidTypeException(type);
 	}
 
 	/**
