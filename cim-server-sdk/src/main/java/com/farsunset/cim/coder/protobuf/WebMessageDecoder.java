@@ -23,6 +23,7 @@ package com.farsunset.cim.coder.protobuf;
 
 import com.farsunset.cim.constant.CIMConstant;
 import com.farsunset.cim.constant.ChannelAttr;
+import com.farsunset.cim.exception.ReadInvalidTypeException;
 import com.farsunset.cim.model.Pong;
 import com.farsunset.cim.model.SentBody;
 import com.farsunset.cim.model.proto.SentBodyProto;
@@ -52,7 +53,13 @@ public class WebMessageDecoder extends MessageToMessageDecoder<BinaryWebSocketFr
             return;
         }
 
-        list.add(getBody(buffer));
+        if (CIMConstant.DATA_TYPE_SENT == type) {
+            list.add(getBody(buffer));
+            return;
+        }
+
+        throw new ReadInvalidTypeException(type);
+
     }
 
     protected SentBody getBody(ByteBuf buffer) throws IOException {
