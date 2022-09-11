@@ -21,7 +21,7 @@
  */
 package com.farsunset.cim.model;
 
-import com.farsunset.cim.constant.CIMConstant;
+import com.farsunset.cim.constant.DataType;
 import com.farsunset.cim.model.proto.ReplyBodyProto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -145,8 +145,7 @@ public class ReplyBody implements Serializable, Transportable {
 
 	@JsonIgnore
 	@Override
-	public byte getType() {
-		return CIMConstant.DATA_TYPE_REPLY;
+	public DataType getType() {
+		return DataType.REPLY;
 	}
-
 }

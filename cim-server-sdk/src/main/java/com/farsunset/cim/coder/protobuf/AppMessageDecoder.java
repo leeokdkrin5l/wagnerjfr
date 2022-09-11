@@ -23,6 +23,7 @@ package com.farsunset.cim.coder.protobuf;
 
 import com.farsunset.cim.constant.CIMConstant;
 import com.farsunset.cim.constant.ChannelAttr;
+import com.farsunset.cim.constant.DataType;
 import com.farsunset.cim.exception.ReadInvalidTypeException;
 import com.farsunset.cim.model.Pong;
 import com.farsunset.cim.model.SentBody;
@@ -77,11 +78,11 @@ public class AppMessageDecoder extends ByteToMessageDecoder {
 
 	private Object mappingMessageObject(byte[] data, byte type) throws com.google.protobuf.InvalidProtocolBufferException {
 
-		if (CIMConstant.DATA_TYPE_PONG == type) {
+		if (DataType.PONG.getValue() == type) {
 			return Pong.getInstance();
 		}
 
-		if (CIMConstant.DATA_TYPE_SENT == type) {
+		if (DataType.SENT.getValue() == type) {
 
 			SentBodyProto.Model bodyProto = SentBodyProto.Model.parseFrom(data);
 			SentBody body = new SentBody();

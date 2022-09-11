@@ -21,7 +21,7 @@
  */
 package com.farsunset.cim.model;
 
-import com.farsunset.cim.constant.CIMConstant;
+import com.farsunset.cim.constant.DataType;
 import com.farsunset.cim.model.proto.MessageProto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -221,7 +221,7 @@ public class Message implements Serializable, Transportable,Cloneable {
 
 	@JsonIgnore
 	@Override
-	public byte getType() {
-		return CIMConstant.DATA_TYPE_MESSAGE;
+	public DataType getType() {
+		return DataType.MESSAGE;
 	}
 }
