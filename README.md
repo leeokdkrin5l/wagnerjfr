@@ -7,9 +7,12 @@
 
 ## 联系方式 
 
-微信：farbluesky
+微信：
+<img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/qcode/wechat_add.png" width="30%"  />
 
-邮箱：3979434@qq.com
+
+邮箱：
+3979434@qq.com
 
 
 ---
