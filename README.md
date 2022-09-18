@@ -9,7 +9,7 @@
 
 微信：
 
-<img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/qcode/wechat_add.png" width="30%"  />
+<img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/qcode/wechat_add.png" width="20%"  />
 
 
 邮箱：
