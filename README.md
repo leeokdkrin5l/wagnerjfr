@@ -7,9 +7,9 @@
 
 ## 联系方式 
 
-微信：
+微信：farbluesky
 
-<img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/qcode/wechat_add.png" width="20%"  />
+<img src="https://staticres.oss-cn-hangzhou.aliyuncs.com/qcode/wechat_add.png" width="30%"  />
 
 
 邮箱：
